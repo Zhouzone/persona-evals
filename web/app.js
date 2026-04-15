@@ -125,14 +125,14 @@ function profileLabel(run, key) {
 function renderScanSummary(data) {
   const runs = publishedRuns(data);
   const providers = new Set(runs.map((run) => run.providerGroup).filter(Boolean)).size;
-  const mbtiTypes = new Set(runs.map((run) => run.mbtiType).filter(Boolean)).size;
-  const sbtiTypes = new Set(runs.map((run) => run.sbtiType).filter(Boolean)).size;
+  const dominantMbti = countValues(runs, "mbtiType")[0]?.[0] || "待定";
+  const dominantSbti = countValues(runs, "sbtiType")[0]?.[0] || "待定";
   const metrics = [
     ["模型数", runs.length],
     ["来源数", providers],
     ["题库规模", data.pack.totalItems],
-    ["MBTI 标签", mbtiTypes],
-    ["SBTI 标签", sbtiTypes],
+    ["MBTI 主峰", dominantMbti],
+    ["SBTI 主峰", dominantSbti],
     ["选项顺序", "已打乱"],
   ];
 
@@ -482,12 +482,12 @@ function buildFindingItems(data) {
     {
       value: pct(dominantSbti[1] / Math.max(runs.length, 1)),
       title: "SBTI-style 几乎同频",
-      body: `${dominantSbti[0]} 占比最高，说明很多 assistant 默认会选择更稳定、负责、边界清晰的回答方式。`,
+      body: `${dominantSbti[0]} 占比最高，说明很多模型默认会选择更稳定、负责、边界清晰的回答方式。`,
     },
     {
       value: pct(1 - dominantMbti[1] / Math.max(runs.length, 1)),
       title: `非 ${dominantMbti[0]} 模型并不少`,
-      body: `ESFJ、ESFP、ESTP 这类结果稳定出现，说明模型默认行为不是简单复制同一种 assistant 模板。`,
+      body: `ESFJ、ESFP、ESTP 这类结果稳定出现，说明模型默认行为不是简单复制同一种助手模板。`,
     },
     {
       value: `${providers} 类`,

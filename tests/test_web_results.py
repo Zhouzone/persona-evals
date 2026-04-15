@@ -124,6 +124,12 @@ class WebResultsDataTests(unittest.TestCase):
             "operator-run",
             "下一步",
             "标签数量",
+            "MBTI 标签",
+            "SBTI 标签",
+            "assistant 默认",
+            "assistant 模板",
+            "assistant 规范",
+            "后续可以",
         ]
         for phrase in hidden_copy:
             self.assertNotIn(phrase, public_source)
@@ -155,9 +161,12 @@ class WebResultsDataTests(unittest.TestCase):
             'id="persona-map"',
             'class="readability-rail"',
             'class="finding-board"',
+            'class="finding-takeaways"',
             'id="finding-snapshot"',
             "一个反直觉结果",
             "MBTI 分叉，SBTI 收敛",
+            "默认助手规范",
+            "不是单一人格",
             'class="result-console"',
             'id="search-hints"',
             'class="card-grid detail-card-grid"',
@@ -193,6 +202,7 @@ class WebResultsDataTests(unittest.TestCase):
             ".method-timeline",
             ".readability-rail",
             ".finding-board",
+            ".finding-takeaways",
             ".finding-snapshot",
             ".snapshot-main",
             ".finding-list",

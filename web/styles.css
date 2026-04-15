@@ -98,6 +98,7 @@ img,
 .model-card,
 .provider-card,
 .method-step,
+.finding-takeaways li,
 .scan-tile {
   border-radius: 8px;
 }
@@ -585,12 +586,41 @@ h3 {
   line-height: 1.8;
 }
 
+.finding-takeaways {
+  display: grid;
+  gap: 8px;
+  margin: 22px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.finding-takeaways li {
+  display: grid;
+  gap: 5px;
+  padding: 10px 12px 10px 14px;
+  border-left: 3px solid color-mix(in srgb, var(--accent) 42%, var(--line));
+  background: color-mix(in srgb, var(--surface-soft) 34%, transparent);
+}
+
+.finding-takeaways strong {
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 900;
+  line-height: 1.35;
+}
+
+.finding-takeaways span {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
 .finding-snapshot {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
-  margin-top: auto;
-  padding-top: 28px;
+  margin-top: 18px;
+  padding-top: 0;
 }
 
 .snapshot-main,
