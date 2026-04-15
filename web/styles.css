@@ -95,7 +95,6 @@ input,
 img,
 .persona-map,
 .result-console,
-.spotlight-card,
 .model-card,
 .provider-card,
 .method-step,
@@ -310,8 +309,7 @@ h3 {
 .search-box span,
 .card-topline span,
 .map-topline span,
-.map-focus span,
-.spotlight-body span {
+.map-focus span {
   display: block;
   color: var(--faint);
   font-size: 12px;
@@ -559,15 +557,24 @@ h3 {
 }
 
 .readability-rail {
+  display: block;
+}
+
+.finding-panel {
   display: grid;
-  grid-template-columns: minmax(260px, 0.36fr) minmax(0, 0.64fr);
+  grid-template-columns: minmax(260px, 0.35fr) minmax(0, 0.65fr);
   gap: 34px;
   align-items: start;
+  padding: 28px;
+  border: 1px solid var(--line-strong);
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--surface) 92%, transparent), transparent),
+    var(--surface);
+  box-shadow: var(--shadow-soft);
 }
 
 .rail-copy {
-  position: sticky;
-  top: 104px;
+  position: static;
 }
 
 .rail-copy p:not(.section-label) {
@@ -576,7 +583,7 @@ h3 {
   line-height: 1.8;
 }
 
-.insight-list {
+.finding-list {
   display: grid;
   gap: 12px;
   margin: 0;
@@ -584,24 +591,45 @@ h3 {
   list-style: none;
 }
 
-.insight-list li {
+.finding-list li {
   display: grid;
-  grid-template-columns: minmax(160px, 0.34fr) 1fr;
-  gap: 24px;
+  grid-template-columns: 56px 1fr;
+  gap: 18px;
   min-height: 132px;
-  padding: 22px 0 22px 22px;
-  border-left: 4px solid var(--line-strong);
-  background: linear-gradient(90deg, color-mix(in srgb, var(--surface) 74%, transparent), transparent);
+  padding: 18px;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--surface-soft) 46%, transparent);
 }
 
-.insight-list strong {
+.finding-index {
+  color: var(--blue);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.finding-copy {
+  display: grid;
+  gap: 9px;
+}
+
+.finding-value {
+  color: var(--accent-strong);
+  font-style: normal;
+  font-size: 30px;
+  font-weight: 930;
+  line-height: 1;
+}
+
+.finding-list strong {
   color: var(--ink);
-  font-size: 23px;
+  font-size: 21px;
   font-weight: 900;
   line-height: 1.22;
 }
 
-.insight-list span {
+.finding-list p {
+  margin: 0;
   color: var(--muted);
   line-height: 1.8;
 }
@@ -706,9 +734,17 @@ h3 {
 }
 
 .type-pill {
+  gap: 8px;
   color: var(--accent-strong);
   border-color: color-mix(in srgb, var(--accent) 34%, transparent);
   background: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+.type-share {
+  color: var(--faint);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 11px;
+  font-weight: 900;
 }
 
 .type-pill.muted {
@@ -760,58 +796,6 @@ td span {
   word-break: break-word;
 }
 
-.spotlight-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
-  margin-bottom: 28px;
-}
-
-.spotlight-card {
-  display: grid;
-  grid-template-columns: 56px 1fr;
-  min-height: 210px;
-  overflow: hidden;
-  border: 1px solid var(--line-strong);
-  background: var(--surface);
-  box-shadow: var(--shadow-soft);
-}
-
-.spotlight-card:first-child {
-  grid-column: span 2;
-}
-
-.spotlight-rank {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  padding-top: 22px;
-  color: var(--blue);
-  border-right: 1px solid var(--line);
-  background: color-mix(in srgb, var(--surface-soft) 70%, transparent);
-  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-  font-size: 13px;
-  font-weight: 900;
-}
-
-.spotlight-body {
-  padding: 22px;
-}
-
-.spotlight-body h3 {
-  min-height: 54px;
-  margin: 14px 0 18px;
-  word-break: break-word;
-}
-
-.spotlight-types {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 18px;
-}
-
-.spotlight-body code,
 td code,
 .card-topline code {
   color: var(--blue);
@@ -821,8 +805,12 @@ td code,
 
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.detail-card-grid {
+  align-items: stretch;
 }
 
 .model-card {
@@ -867,7 +855,7 @@ td code,
 
 .axis-row {
   display: grid;
-  grid-template-columns: 18px 1fr 18px 28px;
+  grid-template-columns: 18px 1fr 18px 28px 44px;
   align-items: center;
   gap: 8px;
   min-height: 24px;
@@ -899,6 +887,13 @@ td code,
 
 .axis-row strong {
   color: var(--ink);
+  text-align: right;
+}
+
+.axis-percent {
+  color: var(--faint);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-style: normal;
   text-align: right;
 }
 
@@ -1002,7 +997,7 @@ footer p {
   .hero-grid,
   .section-head,
   .section-head.compact,
-  .readability-rail {
+  .finding-panel {
     grid-template-columns: 1fr;
   }
 
@@ -1012,14 +1007,9 @@ footer p {
 
   .scan-summary,
   .method-timeline,
-  .spotlight-grid,
   .provider-grid,
   .card-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .spotlight-card:first-child {
-    grid-column: span 1;
   }
 
   h1 {
@@ -1071,8 +1061,7 @@ footer p {
   .scan-summary,
   .method-timeline,
   .map-focus,
-  .insight-list li,
-  .spotlight-grid,
+  .finding-list li,
   .provider-grid,
   .card-grid,
   .result-tools,
@@ -1105,7 +1094,11 @@ footer p {
     padding-right: 16px;
   }
 
-  .insight-list li {
-    padding: 18px 0 18px 18px;
+  .finding-panel {
+    padding: 18px;
+  }
+
+  .finding-list li {
+    padding: 16px;
   }
 }

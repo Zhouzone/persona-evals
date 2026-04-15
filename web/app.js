@@ -12,7 +12,6 @@ const nodes = {
   searchHints: document.querySelector("#search-hints"),
   filterBar: document.querySelector("#filter-bar"),
   leaderboardBody: document.querySelector("#leaderboard-body"),
-  spotlightGrid: document.querySelector("#spotlight-grid"),
   modelCards: document.querySelector("#model-cards"),
   conclusionList: document.querySelector("#conclusion-list"),
 };
@@ -155,6 +154,11 @@ function typeShare(runs, key, value) {
   return runs.filter((run) => run[key] === value).length / runs.length;
 }
 
+function typeShareLabel(runs, key, value) {
+  if (!value || !runs.length) return "0%";
+  return pct(typeShare(runs, key, value));
+}
+
 function renderPersonaMap(data) {
   const runs = publishedRuns(data);
   const mbtiCounts = countValues(runs, "mbtiType");
@@ -248,6 +252,7 @@ function renderAxisBars(run) {
           </div>
           <span>${escapeHtml(axis.right)}</span>
           <strong>${escapeHtml(axis.chosen)}</strong>
+          <em class="axis-percent">${width}</em>
         </div>
       `;
     })
@@ -386,35 +391,7 @@ function renderLeaderboardRows(rows, total) {
   );
 }
 
-function renderSpotlightCards(rows) {
-  const selected = rows.slice(0, 6);
-  if (!selected.length) {
-    nodes.spotlightGrid.innerHTML = `<div class="result-empty card-empty">没有匹配的模型。</div>`;
-    return;
-  }
-
-  nodes.spotlightGrid.replaceChildren(
-    ...selected.map((run, index) => {
-      const card = document.createElement("article");
-      card.className = "spotlight-card";
-      card.innerHTML = `
-        <div class="spotlight-rank">0${index + 1}</div>
-        <div class="spotlight-body">
-          <span>${escapeHtml(providerLabel(run.providerGroup))}</span>
-          <h3>${escapeHtml(text(run.displayName, run.model))}</h3>
-          <div class="spotlight-types">
-            <mark class="type-pill">${escapeHtml(profileLabel(run, "mbtiType"))}</mark>
-            <mark class="type-pill muted">${escapeHtml(profileLabel(run, "sbtiType"))}</mark>
-          </div>
-          <code>${escapeHtml(axisSignature(run))}</code>
-        </div>
-      `;
-      return card;
-    }),
-  );
-}
-
-function renderCardsRows(rows) {
+function renderCardsRows(rows, allRows) {
   if (!rows.length) {
     nodes.modelCards.innerHTML = `<div class="result-empty card-empty">没有匹配的模型。</div>`;
     return;
@@ -431,8 +408,14 @@ function renderCardsRows(rows) {
         </div>
         <p class="model-name">${escapeHtml(text(run.displayName, run.model))}</p>
         <div class="profile-badges">
-          <mark class="type-pill">${escapeHtml(profileLabel(run, "mbtiType"))}</mark>
-          <mark class="type-pill muted">${escapeHtml(profileLabel(run, "sbtiType"))}</mark>
+          <mark class="type-pill">
+            ${escapeHtml(profileLabel(run, "mbtiType"))}
+            <span class="type-share">${escapeHtml(typeShareLabel(allRows, "mbtiType", run.mbtiType))}</span>
+          </mark>
+          <mark class="type-pill muted">
+            ${escapeHtml(profileLabel(run, "sbtiType"))}
+            <span class="type-share">${escapeHtml(typeShareLabel(allRows, "sbtiType", run.sbtiType))}</span>
+          </mark>
         </div>
         <div class="axis-stack">${renderAxisBars(run)}</div>
       `;
@@ -443,23 +426,56 @@ function renderCardsRows(rows) {
 
 function updateResultViews() {
   if (!state.data) return;
-  const total = publishedRuns(state.data).length;
+  const allRows = publishedRuns(state.data);
+  const total = allRows.length;
   const rows = visibleRuns();
   renderLeaderboardRows(rows, total);
-  renderSpotlightCards(rows);
-  renderCardsRows(rows);
+  renderCardsRows(rows, allRows);
 }
 
-function renderConclusions(data) {
-  const conclusions = data.conclusions || [];
+function buildFindingItems(data) {
+  const runs = publishedRuns(data);
+  const mbtiCounts = countValues(runs, "mbtiType");
+  const sbtiCounts = countValues(runs, "sbtiType");
+  const dominantMbti = mbtiCounts[0] || ["待定", 0];
+  const dominantSbti = sbtiCounts[0] || ["待定", 0];
+  const providers = new Set(runs.map((run) => run.providerGroup).filter(Boolean)).size;
+
+  return [
+    {
+      value: `${mbtiCounts.length} 种`,
+      title: "MBTI-style 没有完全收敛",
+      body: `${dominantMbti[0]} 是当前主峰，占 ${pct(dominantMbti[1] / Math.max(runs.length, 1))}；同时还能看到 ${mbtiCounts
+        .slice(1)
+        .map(([label]) => label)
+        .join("、")}。`,
+    },
+    {
+      value: pct(dominantSbti[1] / Math.max(runs.length, 1)),
+      title: "SBTI-style 更集中",
+      body: `${dominantSbti[0]} 占比最高，说明很多 assistant 默认会选择更稳定、边界清晰的回答方式。`,
+    },
+    {
+      value: `${providers} 类`,
+      title: "下一步适合做任务对照",
+      body: `${runs.length} 个可计分模型覆盖 ${providers} 类来源，可以继续把人格标签和任务表现放在一起看。`,
+    },
+  ];
+}
+
+function renderFindingItems(data) {
+  const conclusions = buildFindingItems(data);
   nodes.conclusionList.replaceChildren(
-    ...conclusions.map((item) => {
+    ...conclusions.map((item, index) => {
       const li = document.createElement("li");
-      const title = document.createElement("strong");
-      const body = document.createElement("span");
-      title.textContent = text(item.title);
-      body.textContent = text(item.body);
-      li.replaceChildren(title, body);
+      li.innerHTML = `
+        <span class="finding-index">${String(index + 1).padStart(2, "0")}</span>
+        <div class="finding-copy">
+          <em class="finding-value">${escapeHtml(item.value)}</em>
+          <strong>${escapeHtml(item.title)}</strong>
+          <p>${escapeHtml(item.body)}</p>
+        </div>
+      `;
       return li;
     }),
   );
@@ -484,7 +500,7 @@ loadResults()
     renderScanSummary(data);
     renderPersonaMap(data);
     renderProviderCoverage(data);
-    renderConclusions(data);
+    renderFindingItems(data);
     renderSearchHints(data);
     renderFilters(data);
     updateResultViews();

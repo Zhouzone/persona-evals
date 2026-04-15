@@ -105,12 +105,14 @@
       <section class="insight-section" id="conclusions" aria-label="当前发现">
         <div class="content-inner">
           <div class="readability-rail">
-            <div class="rail-copy">
-              <p class="section-label">当前发现</p>
-              <h2>先看结论，再看每个模型</h2>
-              <p>选项顺序打乱后，MBTI-style 出现多种结果；SBTI-style 仍明显集中。</p>
+            <div class="finding-panel">
+              <div class="rail-copy">
+                <p class="section-label">当前发现</p>
+                <h2>这批结果先说明三件事</h2>
+                <p>这些标签不是官方人格判断，而是模型在同一套任务选择里的行为倾向。先看分布，再去比较单个模型。</p>
+              </div>
+              <ul class="finding-list" id="conclusion-list"></ul>
             </div>
-            <ul class="insight-list" id="conclusion-list"></ul>
           </div>
         </div>
       </section>
@@ -153,13 +155,12 @@
 
       <section class="atlas-section" id="cards">
         <div class="content-inner">
-          <div class="section-head">
+          <div class="section-head atlas-head">
             <p class="section-label">模型图鉴</p>
-            <h2>适合传播的模型卡片</h2>
-            <p>保留模型名、厂商、MBTI-style、SBTI-style 和四轴倾向，方便截图对照。</p>
+            <h2>每个模型的详细倾向</h2>
+            <p>每张卡展示模型标签、全体占比和四轴百分比，适合逐个对照。</p>
           </div>
-          <div class="spotlight-grid" id="spotlight-grid"></div>
-          <div class="card-grid" id="model-cards"></div>
+          <div class="card-grid detail-card-grid" id="model-cards"></div>
         </div>
       </section>
 

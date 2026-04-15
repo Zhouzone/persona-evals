@@ -52,7 +52,7 @@ class WebResultsDataTests(unittest.TestCase):
         self.assertIn('id="provider-coverage"', html)
         self.assertIn('id="provider-grid"', html)
         self.assertIn('id="conclusions"', html)
-        self.assertIn("renderConclusions", app)
+        self.assertIn("renderFindingItems", app)
         self.assertIn("renderProviderCoverage", app)
         self.assertIn("providerGroup", app)
         self.assertTrue(results_path.exists(), "web/data/results.json should be the editable data source")
@@ -154,7 +154,7 @@ class WebResultsDataTests(unittest.TestCase):
             'class="readability-rail"',
             'class="result-console"',
             'id="search-hints"',
-            'id="spotlight-grid"',
+            'class="card-grid detail-card-grid"',
             'class="section-label"',
         ]
         for marker in required_html:
@@ -163,11 +163,13 @@ class WebResultsDataTests(unittest.TestCase):
         required_app = [
             "renderScanSummary",
             "renderPersonaMap",
-            "renderSpotlightCards",
+            "renderFindingItems",
             "renderSearchHints",
+            "typeShareLabel",
             "typeShare",
+            "axis-percent",
+            "type-share",
             "search-hints",
-            "spotlight-grid",
         ]
         for marker in required_app:
             self.assertIn(marker, app)
@@ -180,14 +182,22 @@ class WebResultsDataTests(unittest.TestCase):
             ".persona-map",
             ".method-timeline",
             ".readability-rail",
+            ".finding-panel",
+            ".finding-list",
             ".result-console",
             ".search-hints",
-            ".spotlight-card",
+            ".detail-card-grid",
+            ".axis-percent",
+            ".type-share",
         ]
         for marker in required_styles:
             self.assertIn(marker, styles)
 
         legacy_layout = [
+            "适合传播的模型卡片",
+            "spotlight-grid",
+            "spotlight-card",
+            "renderSpotlightCards",
             "poster-hero",
             "poster-stat",
             "section-kicker",
