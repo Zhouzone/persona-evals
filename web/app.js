@@ -4,11 +4,12 @@ const nodes = {
   themeToggle: document.querySelector("#theme-toggle"),
   themeLabel: document.querySelector("#theme-label"),
   themeIcon: document.querySelector(".theme-icon"),
-  metricGrid: document.querySelector("#metric-grid"),
+  scanSummary: document.querySelector("#scan-summary"),
   personaMap: document.querySelector("#persona-map"),
   providerGrid: document.querySelector("#provider-grid"),
   resultCount: document.querySelector("#result-count"),
   resultSearch: document.querySelector("#result-search"),
+  searchHints: document.querySelector("#search-hints"),
   filterBar: document.querySelector("#filter-bar"),
   leaderboardBody: document.querySelector("#leaderboard-body"),
   spotlightGrid: document.querySelector("#spotlight-grid"),
@@ -35,7 +36,7 @@ function setTheme(theme) {
   document.documentElement.style.colorScheme = theme;
   window.localStorage.setItem(THEME_STORAGE_KEY, theme);
   if (nodes.themeLabel) nodes.themeLabel.textContent = theme === "dark" ? "日间" : "夜间";
-  if (nodes.themeIcon) nodes.themeIcon.textContent = theme === "dark" ? "☼" : "☾";
+  if (nodes.themeIcon) nodes.themeIcon.textContent = theme === "dark" ? "亮" : "夜";
   if (nodes.themeToggle) {
     nodes.themeToggle.setAttribute("aria-label", theme === "dark" ? "切换到日间主题" : "切换到夜间主题");
   }
@@ -121,7 +122,7 @@ function profileLabel(run, key) {
   return text(run[key], "暂无可复核记录");
 }
 
-function renderMetrics(data) {
+function renderScanSummary(data) {
   const runs = publishedRuns(data);
   const providers = new Set(runs.map((run) => run.providerGroup).filter(Boolean)).size;
   const mbtiTypes = new Set(runs.map((run) => run.mbtiType).filter(Boolean)).size;
@@ -135,12 +136,12 @@ function renderMetrics(data) {
     ["选项顺序", "已打乱"],
   ];
 
-  nodes.metricGrid.replaceChildren(
+  nodes.scanSummary.replaceChildren(
     ...metrics.map(([label, value]) => {
       const item = document.createElement("div");
       const labelNode = document.createElement("span");
       const valueNode = document.createElement("strong");
-      item.className = "poster-stat";
+      item.className = "scan-tile";
       labelNode.textContent = label;
       valueNode.textContent = value;
       item.replaceChildren(labelNode, valueNode);
@@ -164,7 +165,7 @@ function renderPersonaMap(data) {
 
   nodes.personaMap.innerHTML = `
     <div class="map-topline">
-      <span>Personality Atlas</span>
+      <span>人格图谱</span>
       <strong>${escapeHtml(dominantMbti)} / ${escapeHtml(dominantSbti)}</strong>
     </div>
     <div class="map-focus">
@@ -293,6 +294,36 @@ function renderFilters(data) {
       button.addEventListener("click", () => {
         state.filter = filter.value;
         renderFilters(data);
+        updateResultViews();
+      });
+      return button;
+    }),
+  );
+}
+
+function renderSearchHints(data) {
+  const runs = publishedRuns(data);
+  const providerHints = ["OpenAI", "Anthropic", "Qwen", "DeepSeek"].filter((label) =>
+    runs.some((run) => providerLabel(run.providerGroup) === label),
+  );
+  const typeHints = [
+    ...countValues(runs, "mbtiType").slice(0, 3).map(([label]) => label),
+    ...countValues(runs, "sbtiType").slice(0, 2).map(([label]) => label),
+  ];
+  const modelHints = runs
+    .filter((run) => ["gpt-5.4", "claude-sonnet-4-6", "deepseek-v3.2"].includes(run.model))
+    .map((run) => text(run.displayName, run.model));
+  const hints = [...providerHints, ...typeHints, ...modelHints].slice(0, 10);
+
+  nodes.searchHints.replaceChildren(
+    ...hints.map((hint) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "hint-chip";
+      button.textContent = hint;
+      button.addEventListener("click", () => {
+        state.query = hint;
+        if (nodes.resultSearch) nodes.resultSearch.value = hint;
         updateResultViews();
       });
       return button;
@@ -435,8 +466,8 @@ function renderConclusions(data) {
 }
 
 function renderError(error) {
-  nodes.metricGrid.innerHTML = `
-    <div class="metric-card error-card">
+  nodes.scanSummary.innerHTML = `
+    <div class="scan-tile error-card">
       <span>数据加载失败</span>
       <strong>${escapeHtml(error.message)}</strong>
     </div>
@@ -450,10 +481,11 @@ initSearch();
 loadResults()
   .then((data) => {
     state.data = data;
-    renderMetrics(data);
+    renderScanSummary(data);
     renderPersonaMap(data);
     renderProviderCoverage(data);
     renderConclusions(data);
+    renderSearchHints(data);
     renderFilters(data);
     updateResultViews();
   })

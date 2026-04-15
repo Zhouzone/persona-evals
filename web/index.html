@@ -21,7 +21,13 @@
       })();
     </script>
   </head>
-  <body>
+  <body class="uipro-shell" data-rollback="0be6b32">
+    <div class="release-strip" data-rollback="0be6b32">
+      <span>测试版 UI</span>
+      <strong>回退版本 0be6b32</strong>
+      <a href="https://github.com/Zhouzone/persona-evals">GitHub 仓库</a>
+    </div>
+
     <nav class="nav-shell" aria-label="主导航">
       <a class="brand" href="#top" aria-label="Persona Evals 首页">
         <span>Persona</span><span class="brand-accent">Evals</span>
@@ -29,99 +35,98 @@
       <div class="nav-links">
         <a href="#harness">方法</a>
         <a href="#conclusions">发现</a>
-        <a href="#cards">图鉴</a>
         <a href="#results">榜单</a>
+        <a href="#cards">图鉴</a>
         <a href="#provider-coverage">覆盖</a>
-        <a href="https://github.com/Zhouzone/persona-evals" aria-label="GitHub 仓库">GitHub</a>
         <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换主题">
-          <span class="theme-icon" aria-hidden="true">☾</span>
+          <span class="theme-icon" aria-hidden="true">夜</span>
           <span id="theme-label">夜间</span>
         </button>
       </div>
     </nav>
 
     <main id="top">
-      <section class="poster-hero" id="results">
-        <div class="poster-inner">
-          <div class="poster-copy">
-            <p class="section-label">Persona Evals / 模型人格图谱</p>
-            <h1>模型人格评测：LLM 默认会长成什么样的 Agent？</h1>
+      <section class="uipro-hero">
+        <div class="hero-grid">
+          <div class="hero-copy-block">
+            <p class="section-label">Persona Evals / 模型人格评测</p>
+            <h1>不同模型在同一套人格题里，会呈现出什么默认倾向？</h1>
             <p class="hero-copy">
               我们用随机化选项的人格题库测试不同模型，在模糊、压力、失败、证据不足和边界冲突下观察它们的选择偏好。
             </p>
-            <div class="poster-stats" id="metric-grid" aria-label="评测指标"></div>
-            <img class="poster-texture" src="./assets/seevomap-hero.png" alt="模型人格图谱纹理" />
+            <div class="scan-summary" id="scan-summary" aria-label="评测概览"></div>
+            <div class="hero-actions" aria-label="页面入口">
+              <a class="primary-action" href="#results">查看模型结果</a>
+              <a class="secondary-action" href="#harness">了解评测流程</a>
+            </div>
           </div>
 
-          <div class="persona-map" id="persona-map" aria-label="人格标签分布">
-            <div class="map-placeholder">加载模型人格分布</div>
-          </div>
+          <aside class="hero-panel" aria-label="人格分布概览">
+            <img src="./assets/seevomap-hero.png" alt="模型人格图谱视觉纹理" />
+            <div class="persona-map" id="persona-map" aria-label="人格标签分布">
+              <div class="map-placeholder">加载模型人格分布</div>
+            </div>
+          </aside>
         </div>
+      </section>
 
-        <div class="protocol-shell" id="harness" aria-label="评测流程">
-          <div class="protocol-header">
+      <section class="method-section" id="harness" aria-label="评测流程">
+        <div class="content-inner">
+          <div class="section-head compact">
             <p class="section-label">评测流程</p>
-            <h2>同一套题，不同模型，同一把尺</h2>
+            <h2>题库、随机化、记录、计分放在同一条线上</h2>
+            <p>让读者先知道结果从哪里来，再进入模型榜单。</p>
           </div>
-          <div class="protocol-line">
-            <div class="protocol-step">
+          <div class="method-timeline">
+            <article class="method-step">
               <span>01</span>
               <strong>题库</strong>
               <p>题库参考大众熟悉的 MBTI/SBTI 问题形式，改写为模型在任务中的选择。</p>
-            </div>
-            <div class="protocol-step">
+            </article>
+            <article class="method-step">
               <span>02</span>
               <strong>随机化选项</strong>
               <p>每题展示时打乱 A/B/C 顺序，减少位置偏好和迎合测试结构。</p>
-            </div>
-            <div class="protocol-step">
+            </article>
+            <article class="method-step">
               <span>03</span>
               <strong>逐题记录</strong>
               <p>记录每道题的选择、置信度和简短理由，形成可复核 trace。</p>
-            </div>
-            <div class="protocol-step">
+            </article>
+            <article class="method-step">
               <span>04</span>
               <strong>映射计分</strong>
               <p>把随机选项映射回计分轴，得到 MBTI-style 和 SBTI-style 标签。</p>
-            </div>
+            </article>
           </div>
         </div>
       </section>
 
       <section class="insight-section" id="conclusions" aria-label="当前发现">
         <div class="content-inner">
-          <div class="section-head">
-            <p class="section-label">当前发现</p>
-            <h2>模型人格并不完全收敛</h2>
-            <p>选项顺序打乱后，MBTI-style 出现多种结果；SBTI-style 仍明显集中。</p>
+          <div class="readability-rail">
+            <div class="rail-copy">
+              <p class="section-label">当前发现</p>
+              <h2>先看结论，再看每个模型</h2>
+              <p>选项顺序打乱后，MBTI-style 出现多种结果；SBTI-style 仍明显集中。</p>
+            </div>
+            <ul class="insight-list" id="conclusion-list"></ul>
           </div>
-          <ul class="insight-strip" id="conclusion-list"></ul>
         </div>
       </section>
 
-      <section class="atlas-section" id="cards">
+      <section class="results-section" id="results">
         <div class="content-inner">
-          <div class="section-head">
-            <p class="section-label">模型图鉴</p>
-            <h2>先看最容易传播的几张卡</h2>
-            <p>大标签、模型名和四轴倾向放在同一张卡里，方便比较和截图。</p>
-          </div>
-          <div class="spotlight-grid" id="spotlight-grid"></div>
-          <div class="card-grid" id="model-cards"></div>
-        </div>
-      </section>
-
-      <section class="results-section">
-        <div class="content-inner">
-          <div class="table-shell" aria-label="模型人格榜单">
-            <div class="results-head">
+          <div class="result-console" aria-label="模型人格榜单">
+            <div class="console-head">
               <div>
                 <p class="section-label">模型结果</p>
-                <h2>搜索、筛选、对照</h2>
+                <h2>用搜索和标签快速定位模型</h2>
               </div>
               <p id="result-count"></p>
             </div>
-            <div class="result-tools" aria-label="结果筛选">
+            <div class="search-hints" id="search-hints" aria-label="搜索提示"></div>
+            <div class="result-tools" aria-label="结果筛选和搜索">
               <label class="search-box" for="result-search">
                 <span>快速查找</span>
                 <input id="result-search" type="search" placeholder="搜索模型、厂商或人格标签" autocomplete="off" />
@@ -143,6 +148,18 @@
               </table>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section class="atlas-section" id="cards">
+        <div class="content-inner">
+          <div class="section-head">
+            <p class="section-label">模型图鉴</p>
+            <h2>适合传播的模型卡片</h2>
+            <p>保留模型名、厂商、MBTI-style、SBTI-style 和四轴倾向，方便截图对照。</p>
+          </div>
+          <div class="spotlight-grid" id="spotlight-grid"></div>
+          <div class="card-grid" id="model-cards"></div>
         </div>
       </section>
 

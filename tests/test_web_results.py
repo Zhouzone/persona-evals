@@ -136,16 +136,24 @@ class WebResultsDataTests(unittest.TestCase):
         self.assertIn('id="filter-bar"', html)
         self.assertIn("renderFilters", app)
 
-    def test_public_site_uses_poster_and_atlas_layout(self):
+    def test_public_site_uses_uipro_readable_console_layout(self):
         html = (ROOT / "web" / "index.html").read_text(encoding="utf-8")
         app = (ROOT / "web" / "app.js").read_text(encoding="utf-8")
         styles = (ROOT / "web" / "styles.css").read_text(encoding="utf-8")
 
         required_html = [
-            'class="poster-hero"',
+            'class="uipro-shell"',
+            'class="release-strip"',
+            'data-rollback="0be6b32"',
+            "测试版",
+            "回退版本 0be6b32",
+            'class="uipro-hero"',
+            'id="scan-summary"',
+            'class="method-timeline"',
             'id="persona-map"',
-            'class="protocol-line"',
-            'class="insight-strip"',
+            'class="readability-rail"',
+            'class="result-console"',
+            'id="search-hints"',
             'id="spotlight-grid"',
             'class="section-label"',
         ]
@@ -153,25 +161,35 @@ class WebResultsDataTests(unittest.TestCase):
             self.assertIn(marker, html)
 
         required_app = [
+            "renderScanSummary",
             "renderPersonaMap",
             "renderSpotlightCards",
+            "renderSearchHints",
             "typeShare",
+            "search-hints",
             "spotlight-grid",
         ]
         for marker in required_app:
             self.assertIn(marker, app)
 
         required_styles = [
-            ".poster-hero",
+            ".uipro-shell",
+            ".release-strip",
+            ".uipro-hero",
+            ".scan-summary",
             ".persona-map",
-            ".protocol-line",
-            ".insight-strip",
+            ".method-timeline",
+            ".readability-rail",
+            ".result-console",
+            ".search-hints",
             ".spotlight-card",
         ]
         for marker in required_styles:
             self.assertIn(marker, styles)
 
         legacy_layout = [
+            "poster-hero",
+            "poster-stat",
             "section-kicker",
             "flow-grid",
             "flow-step",
