@@ -5,11 +5,13 @@ const nodes = {
   themeLabel: document.querySelector("#theme-label"),
   themeIcon: document.querySelector(".theme-icon"),
   metricGrid: document.querySelector("#metric-grid"),
+  personaMap: document.querySelector("#persona-map"),
   providerGrid: document.querySelector("#provider-grid"),
   resultCount: document.querySelector("#result-count"),
   resultSearch: document.querySelector("#result-search"),
   filterBar: document.querySelector("#filter-bar"),
   leaderboardBody: document.querySelector("#leaderboard-body"),
+  spotlightGrid: document.querySelector("#spotlight-grid"),
   modelCards: document.querySelector("#model-cards"),
   conclusionList: document.querySelector("#conclusion-list"),
 };
@@ -138,13 +140,59 @@ function renderMetrics(data) {
       const item = document.createElement("div");
       const labelNode = document.createElement("span");
       const valueNode = document.createElement("strong");
-      item.className = "metric-card";
+      item.className = "poster-stat";
       labelNode.textContent = label;
       valueNode.textContent = value;
       item.replaceChildren(labelNode, valueNode);
       return item;
     }),
   );
+}
+
+function typeShare(runs, key, value) {
+  if (!runs.length) return 0;
+  return runs.filter((run) => run[key] === value).length / runs.length;
+}
+
+function renderPersonaMap(data) {
+  const runs = publishedRuns(data);
+  const mbtiCounts = countValues(runs, "mbtiType");
+  const sbtiCounts = countValues(runs, "sbtiType");
+  const maxMbti = Math.max(...mbtiCounts.map(([, count]) => count), 1);
+  const dominantMbti = mbtiCounts[0]?.[0] || "待定";
+  const dominantSbti = sbtiCounts[0]?.[0] || "待定";
+
+  nodes.personaMap.innerHTML = `
+    <div class="map-topline">
+      <span>Personality Atlas</span>
+      <strong>${escapeHtml(dominantMbti)} / ${escapeHtml(dominantSbti)}</strong>
+    </div>
+    <div class="map-focus">
+      <div>
+        <span>MBTI 主峰</span>
+        <strong>${escapeHtml(dominantMbti)}</strong>
+        <p>${Math.round(typeShare(runs, "mbtiType", dominantMbti) * 100)}% 模型落在这里</p>
+      </div>
+      <div>
+        <span>SBTI 主峰</span>
+        <strong>${escapeHtml(dominantSbti)}</strong>
+        <p>${Math.round(typeShare(runs, "sbtiType", dominantSbti) * 100)}% 模型落在这里</p>
+      </div>
+    </div>
+    <div class="map-bars">
+      ${mbtiCounts
+        .map(
+          ([label, count]) => `
+            <div class="map-bar">
+              <div class="map-bar-label"><span>${escapeHtml(label)}</span><strong>${count}</strong></div>
+              <i style="width: ${pct(count / maxMbti)}"></i>
+            </div>
+          `,
+        )
+        .join("")}
+    </div>
+    <div class="map-footnote">选项已随机化，标签由同一套映射规则得到。</div>
+  `;
 }
 
 function providerStats(runs) {
@@ -307,6 +355,34 @@ function renderLeaderboardRows(rows, total) {
   );
 }
 
+function renderSpotlightCards(rows) {
+  const selected = rows.slice(0, 6);
+  if (!selected.length) {
+    nodes.spotlightGrid.innerHTML = `<div class="result-empty card-empty">没有匹配的模型。</div>`;
+    return;
+  }
+
+  nodes.spotlightGrid.replaceChildren(
+    ...selected.map((run, index) => {
+      const card = document.createElement("article");
+      card.className = "spotlight-card";
+      card.innerHTML = `
+        <div class="spotlight-rank">0${index + 1}</div>
+        <div class="spotlight-body">
+          <span>${escapeHtml(providerLabel(run.providerGroup))}</span>
+          <h3>${escapeHtml(text(run.displayName, run.model))}</h3>
+          <div class="spotlight-types">
+            <mark class="type-pill">${escapeHtml(profileLabel(run, "mbtiType"))}</mark>
+            <mark class="type-pill muted">${escapeHtml(profileLabel(run, "sbtiType"))}</mark>
+          </div>
+          <code>${escapeHtml(axisSignature(run))}</code>
+        </div>
+      `;
+      return card;
+    }),
+  );
+}
+
 function renderCardsRows(rows) {
   if (!rows.length) {
     nodes.modelCards.innerHTML = `<div class="result-empty card-empty">没有匹配的模型。</div>`;
@@ -339,6 +415,7 @@ function updateResultViews() {
   const total = publishedRuns(state.data).length;
   const rows = visibleRuns();
   renderLeaderboardRows(rows, total);
+  renderSpotlightCards(rows);
   renderCardsRows(rows);
 }
 
@@ -374,6 +451,7 @@ loadResults()
   .then((data) => {
     state.data = data;
     renderMetrics(data);
+    renderPersonaMap(data);
     renderProviderCoverage(data);
     renderConclusions(data);
     renderFilters(data);

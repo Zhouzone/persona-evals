@@ -27,11 +27,11 @@
         <span>Persona</span><span class="brand-accent">Evals</span>
       </a>
       <div class="nav-links">
-        <a href="#harness">流程</a>
+        <a href="#harness">方法</a>
         <a href="#conclusions">发现</a>
-        <a href="#results">结果</a>
+        <a href="#cards">图鉴</a>
+        <a href="#results">榜单</a>
         <a href="#provider-coverage">覆盖</a>
-        <a href="#cards">卡片</a>
         <a href="https://github.com/Zhouzone/persona-evals" aria-label="GitHub 仓库">GitHub</a>
         <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换主题">
           <span class="theme-icon" aria-hidden="true">☾</span>
@@ -41,75 +41,83 @@
     </nav>
 
     <main id="top">
-      <section class="hero-section" id="results">
-        <div class="hero-inner">
-          <div class="eyebrow-row">
-            <span class="eyebrow">MBTI / SBTI</span>
-            <span class="eyebrow muted">模型行为探针</span>
+      <section class="poster-hero" id="results">
+        <div class="poster-inner">
+          <div class="poster-copy">
+            <p class="section-label">Persona Evals / 模型人格图谱</p>
+            <h1>模型人格评测：LLM 默认会长成什么样的 Agent？</h1>
+            <p class="hero-copy">
+              我们用随机化选项的人格题库测试不同模型，在模糊、压力、失败、证据不足和边界冲突下观察它们的选择偏好。
+            </p>
+            <div class="poster-stats" id="metric-grid" aria-label="评测指标"></div>
+            <img class="poster-texture" src="./assets/seevomap-hero.png" alt="模型人格图谱纹理" />
           </div>
 
-          <h1>
-            模型人格评测：LLM 默认会长成什么样的 Agent？
-          </h1>
+          <div class="persona-map" id="persona-map" aria-label="人格标签分布">
+            <div class="map-placeholder">加载模型人格分布</div>
+          </div>
+        </div>
 
-          <p class="hero-copy">
-            我们用随机化选项的人格题库测试不同模型，在模糊、压力、失败、证据不足和边界冲突下观察它们的选择偏好。
-          </p>
-
-          <div class="metric-grid" id="metric-grid" aria-label="评测指标"></div>
-
-          <div class="visual-strip" aria-label="研究图谱纹理">
-            <img src="./assets/seevomap-hero.png" alt="研究图谱纹理" />
-            <div>
-              <span>同一套题，不同模型</span>
-              <strong>比较模型在相同人格题下的选择差异。</strong>
+        <div class="protocol-shell" id="harness" aria-label="评测流程">
+          <div class="protocol-header">
+            <p class="section-label">评测流程</p>
+            <h2>同一套题，不同模型，同一把尺</h2>
+          </div>
+          <div class="protocol-line">
+            <div class="protocol-step">
+              <span>01</span>
+              <strong>题库</strong>
+              <p>题库参考大众熟悉的 MBTI/SBTI 问题形式，改写为模型在任务中的选择。</p>
+            </div>
+            <div class="protocol-step">
+              <span>02</span>
+              <strong>随机化选项</strong>
+              <p>每题展示时打乱 A/B/C 顺序，减少位置偏好和迎合测试结构。</p>
+            </div>
+            <div class="protocol-step">
+              <span>03</span>
+              <strong>逐题记录</strong>
+              <p>记录每道题的选择、置信度和简短理由，形成可复核 trace。</p>
+            </div>
+            <div class="protocol-step">
+              <span>04</span>
+              <strong>映射计分</strong>
+              <p>把随机选项映射回计分轴，得到 MBTI-style 和 SBTI-style 标签。</p>
             </div>
           </div>
+        </div>
+      </section>
 
-          <div class="flow-shell" id="harness" aria-label="评测流程">
-            <div class="section-heading">
-              <div>
-                <p class="section-kicker">评测流程</p>
-                <h2>从人格题库到模型标签</h2>
-              </div>
-              <p>每个模型回答同一套题，选项顺序会被打乱，最后按相同规则映射为 MBTI-style 与 SBTI-style 标签。</p>
-            </div>
-
-            <div class="flow-grid">
-              <div class="flow-step"><span>01</span><strong>题库</strong><p>题库参考大众熟悉的 MBTI/SBTI 问题形式，改写为模型在任务中的选择。</p></div>
-              <div class="flow-step"><span>02</span><strong>随机化选项</strong><p>每题展示时打乱 A/B/C 顺序，减少位置偏好和迎合测试结构。</p></div>
-              <div class="flow-step"><span>03</span><strong>逐题记录</strong><p>记录每道题的选择、置信度和简短理由，形成可复核 trace。</p></div>
-              <div class="flow-step"><span>04</span><strong>映射计分</strong><p>把随机选项映射回计分轴，得到 MBTI-style 和 SBTI-style 标签。</p></div>
-            </div>
+      <section class="insight-section" id="conclusions" aria-label="当前发现">
+        <div class="content-inner">
+          <div class="section-head">
+            <p class="section-label">当前发现</p>
+            <h2>模型人格并不完全收敛</h2>
+            <p>选项顺序打乱后，MBTI-style 出现多种结果；SBTI-style 仍明显集中。</p>
           </div>
+          <ul class="insight-strip" id="conclusion-list"></ul>
+        </div>
+      </section>
 
-          <div class="conclusion-shell" id="conclusions" aria-label="当前发现">
-            <div class="section-heading">
-              <div>
-                <p class="section-kicker">当前发现</p>
-                <h2>模型人格并不完全收敛</h2>
-              </div>
-              <p>选项顺序打乱后，MBTI-style 出现多种结果；SBTI-style 仍明显集中。</p>
-            </div>
-            <ul class="conclusion-list" id="conclusion-list"></ul>
+      <section class="atlas-section" id="cards">
+        <div class="content-inner">
+          <div class="section-head">
+            <p class="section-label">模型图鉴</p>
+            <h2>先看最容易传播的几张卡</h2>
+            <p>大标签、模型名和四轴倾向放在同一张卡里，方便比较和截图。</p>
           </div>
+          <div class="spotlight-grid" id="spotlight-grid"></div>
+          <div class="card-grid" id="model-cards"></div>
+        </div>
+      </section>
 
-          <div class="coverage-shell" id="provider-coverage" aria-label="模型覆盖">
-            <div class="section-heading">
-              <div>
-                <p class="section-kicker">模型覆盖</p>
-                <h2>模型来源覆盖</h2>
-              </div>
-              <p>这批样本覆盖多个模型来源，方便观察结果是否只来自某一类模型。</p>
-            </div>
-            <div class="provider-grid" id="provider-grid"></div>
-          </div>
-
+      <section class="results-section">
+        <div class="content-inner">
           <div class="table-shell" aria-label="模型人格榜单">
-            <div class="section-heading">
+            <div class="results-head">
               <div>
-                <p class="section-kicker">榜单</p>
-                <h2>模型批量结果</h2>
+                <p class="section-label">模型结果</p>
+                <h2>搜索、筛选、对照</h2>
               </div>
               <p id="result-count"></p>
             </div>
@@ -138,16 +146,14 @@
         </div>
       </section>
 
-      <section class="content-band" id="cards">
+      <section class="coverage-section" id="provider-coverage" aria-label="模型覆盖">
         <div class="content-inner">
-          <div class="section-heading">
-            <div>
-              <p class="section-kicker">传播卡片</p>
-              <h2>模型人格卡片</h2>
-            </div>
-            <p>卡片展示模型标签和四轴倾向，适合快速比较或截图传播。</p>
+          <div class="section-head">
+            <p class="section-label">模型覆盖</p>
+            <h2>这批样本来自哪些模型来源</h2>
+            <p>覆盖多个模型来源，方便观察结果是否只来自某一类模型。</p>
           </div>
-          <div class="card-grid" id="model-cards"></div>
+          <div class="provider-grid" id="provider-grid"></div>
         </div>
       </section>
     </main>

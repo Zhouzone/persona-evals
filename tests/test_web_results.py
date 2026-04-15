@@ -136,6 +136,51 @@ class WebResultsDataTests(unittest.TestCase):
         self.assertIn('id="filter-bar"', html)
         self.assertIn("renderFilters", app)
 
+    def test_public_site_uses_poster_and_atlas_layout(self):
+        html = (ROOT / "web" / "index.html").read_text(encoding="utf-8")
+        app = (ROOT / "web" / "app.js").read_text(encoding="utf-8")
+        styles = (ROOT / "web" / "styles.css").read_text(encoding="utf-8")
+
+        required_html = [
+            'class="poster-hero"',
+            'id="persona-map"',
+            'class="protocol-line"',
+            'class="insight-strip"',
+            'id="spotlight-grid"',
+            'class="section-label"',
+        ]
+        for marker in required_html:
+            self.assertIn(marker, html)
+
+        required_app = [
+            "renderPersonaMap",
+            "renderSpotlightCards",
+            "typeShare",
+            "spotlight-grid",
+        ]
+        for marker in required_app:
+            self.assertIn(marker, app)
+
+        required_styles = [
+            ".poster-hero",
+            ".persona-map",
+            ".protocol-line",
+            ".insight-strip",
+            ".spotlight-card",
+        ]
+        for marker in required_styles:
+            self.assertIn(marker, styles)
+
+        legacy_layout = [
+            "section-kicker",
+            "flow-grid",
+            "flow-step",
+            "metric-card",
+            "visual-strip",
+        ]
+        for marker in legacy_layout:
+            self.assertNotIn(marker, html)
+
 
 if __name__ == "__main__":
     unittest.main()
