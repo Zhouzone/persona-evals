@@ -181,7 +181,7 @@ def run_model(
 def main(argv: list[str] | None = None) -> int:
     env_file = _preload_env(argv)
     parser = argparse.ArgumentParser(
-        description="Run MBTI-like and SBTI-style AI personality tests."
+        description="Run MBTI-style and SBTI-style AI personality tests."
     )
     parser.add_argument(
         "--env-file",

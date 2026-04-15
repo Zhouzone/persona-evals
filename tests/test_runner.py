@@ -60,8 +60,8 @@ class RunnerTests(unittest.TestCase):
                 "run_id": "run-good",
                 "model": model,
                 "results": {
-                    "mbti_like": {"type": "INTJ-like"},
-                    "sbti_style": {"type": "BOSS-like"},
+                    "mbti_like": {"type": "INTJ"},
+                    "sbti_style": {"type": "BOSS"},
                     "recommended_skill": {"id": "evidence_before_victory"},
                 },
             }

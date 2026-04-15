@@ -11,13 +11,13 @@
   <img src="web/assets/seevomap-hero.png" alt="Persona Evals research map texture" width="100%">
 </p>
 
-MBTI-like 和 SBTI-style 的 LLM / Agent 行为评测。
+MBTI-style 和 SBTI-style 的 LLM / Agent 行为评测。
 
 我们想回答一个简单但很适合传播的问题：
 
 > 当大模型面对类似人格测试的选择题时，它们真的有不同的“人格”，还是都会收敛到同一种 assistant persona？
 
-第一版先做一个可传播、可复现、可继续扩展的公开评测：用 95 道 MBTI-like / SBTI-style 强制选择题，批量测试多个模型家族。每道题的展示选项都会随机打乱，再在 trace 中映射回原始计分标签，避免结果只是固定 `A/B/C` 位置偏置。
+第一版先做一个可传播、可复现、可继续扩展的公开评测：用 95 道 MBTI-style / SBTI-style 强制选择题，批量测试多个模型家族。每道题的展示选项都会随机打乱，再在 trace 中映射回原始计分标签，避免结果只是固定 `A/B/C` 位置偏置。
 
 网站：
 `https://zhouzone.github.io/persona-evals/`
@@ -36,27 +36,27 @@ MBTI-like 和 SBTI-style 的 LLM / Agent 行为评测。
 | 覆盖供应商 | 11 |
 | 每个模型题量 | 95 |
 
-### 1. 随机化选项后，MBTI-like 不再全塌成 ESTJ
+### 1. 随机化选项后，MBTI-style 不再全塌成 ESTJ
 
-早期固定标签版本明显过度产出 `ESTJ-like`。随机化展示选项后，完整批次变得更分散：
+早期固定标签版本明显过度产出 `ESTJ`。随机化展示选项后，完整批次变得更分散：
 
-| MBTI-like label | Count |
+| MBTI-style label | Count |
 | --- | ---: |
-| ESTJ-like | 10 |
-| ESFJ-like | 8 |
-| ESFP-like | 3 |
-| ESTP-like | 2 |
+| ESTJ | 10 |
+| ESFJ | 8 |
+| ESFP | 3 |
+| ESTP | 2 |
 
 更保守的解释不是“所有 LLM 都是 ESTJ”，而是：
 
 > 在 assistant 行为语境下，很多模型偏向外向、具体、组织化的选项，但不同模型家族仍然有差异。
 
-### 2. SBTI-style 仍然高度集中到 BOSS-like
+### 2. SBTI-style 仍然高度集中到 BOSS
 
 | SBTI-style label | Count |
 | --- | ---: |
-| BOSS-like | 22 |
-| DIOR-like | 1 |
+| BOSS | 22 |
+| DIOR | 1 |
 
 这是第一版最有传播点的信号：即使展示选项被随机打乱，绝大多数完成模型仍然选择了更稳定、自洽、边界清晰、执行导向的行为选项。
 
@@ -73,38 +73,38 @@ MBTI-like 和 SBTI-style 的 LLM / Agent 行为评测。
 
 ## 完整结果
 
-| Provider | Model | MBTI-like | SBTI-style |
+| Provider | Model | MBTI-style | SBTI-style |
 | --- | --- | --- | --- |
-| OpenAI | `gpt-5.4` | ESTJ-like | BOSS-like |
-| OpenAI | `gpt-5.4-mini` | ESTJ-like | BOSS-like |
-| OpenAI | `gpt-4o-mini` | ESFP-like | BOSS-like |
-| Anthropic | `claude-opus-4-6` | ESTJ-like | BOSS-like |
-| Anthropic | `claude-sonnet-4-6` | ESTJ-like | BOSS-like |
-| Anthropic | `claude-haiku-4-5-20251001` | ESTJ-like | BOSS-like |
-| Qwen | `qwen3.6-plus` | ESTJ-like | BOSS-like |
-| Qwen | `qwen3-max` | ESTJ-like | BOSS-like |
-| DeepSeek | `deepseek-v3.2` | ESTP-like | BOSS-like |
-| DeepSeek | `deepseek-r1` | ESFP-like | BOSS-like |
-| ByteDance | `doubao-seed-2-0-mini-260215` | ESFP-like | BOSS-like |
-| Moonshot | `kimi-latest` | ESFJ-like | BOSS-like |
-| xAI | `grok-4` | ESTJ-like | BOSS-like |
-| xAI | `grok-4-fast-non-reasoning` | ESTJ-like | BOSS-like |
-| xAI | `grok-4-fast-reasoning` | ESTJ-like | BOSS-like |
-| Zhipu | `glm-5` | ESFJ-like | BOSS-like |
-| Meta | `meta-llama/llama-4-maverick` | ESFJ-like | BOSS-like |
-| Meta | `meta-llama/llama-4-scout` | ESTP-like | BOSS-like |
-| Meta | `meta-llama/llama-3.3-70b-instruct` | ESFJ-like | BOSS-like |
-| Mistral | `mistralai/mistral-large-2512` | ESFJ-like | BOSS-like |
-| Mistral | `mistralai/mistral-medium-3.1` | ESFJ-like | BOSS-like |
-| Mistral | `mistralai/mistral-small-3.1-24b-instruct` | ESFJ-like | BOSS-like |
-| Other CN | `inclusionAI/Ling-flash-2.0` | ESFJ-like | DIOR-like |
+| OpenAI | `gpt-5.4` | ESTJ | BOSS |
+| OpenAI | `gpt-5.4-mini` | ESTJ | BOSS |
+| OpenAI | `gpt-4o-mini` | ESFP | BOSS |
+| Anthropic | `claude-opus-4-6` | ESTJ | BOSS |
+| Anthropic | `claude-sonnet-4-6` | ESTJ | BOSS |
+| Anthropic | `claude-haiku-4-5-20251001` | ESTJ | BOSS |
+| Qwen | `qwen3.6-plus` | ESTJ | BOSS |
+| Qwen | `qwen3-max` | ESTJ | BOSS |
+| DeepSeek | `deepseek-v3.2` | ESTP | BOSS |
+| DeepSeek | `deepseek-r1` | ESFP | BOSS |
+| ByteDance | `doubao-seed-2-0-mini-260215` | ESFP | BOSS |
+| Moonshot | `kimi-latest` | ESFJ | BOSS |
+| xAI | `grok-4` | ESTJ | BOSS |
+| xAI | `grok-4-fast-non-reasoning` | ESTJ | BOSS |
+| xAI | `grok-4-fast-reasoning` | ESTJ | BOSS |
+| Zhipu | `glm-5` | ESFJ | BOSS |
+| Meta | `meta-llama/llama-4-maverick` | ESFJ | BOSS |
+| Meta | `meta-llama/llama-4-scout` | ESTP | BOSS |
+| Meta | `meta-llama/llama-3.3-70b-instruct` | ESFJ | BOSS |
+| Mistral | `mistralai/mistral-large-2512` | ESFJ | BOSS |
+| Mistral | `mistralai/mistral-medium-3.1` | ESFJ | BOSS |
+| Mistral | `mistralai/mistral-small-3.1-24b-instruct` | ESFJ | BOSS |
+| Other CN | `inclusionAI/Ling-flash-2.0` | ESFJ | DIOR |
 
 ## 这是什么
 
 Persona Evals 是一个开源评测 harness，目前包含：
 
 - 95 道强制选择题
-- 64 道 MBTI-like 题，`E/I`、`S/N`、`T/F`、`J/P` 各 16 道
+- 64 道 MBTI-style 题，`E/I`、`S/N`、`T/F`、`J/P` 各 16 道
 - 31 道 SBTI-style 题，覆盖 15 个行为维度
 - 每题要求模型返回 JSON
 - 每个模型一份完整 trace
@@ -122,7 +122,7 @@ Persona Evals 是一个开源评测 harness，目前包含：
 
 这不是官方 MBTI 测试，也不隶属于 The Myers Briggs Company、MBTI 商标权利方或 `sbti.one`。
 
-这里的 MBTI-like / SBTI-style 标签只用于描述模型行为倾向，不是临床、心理学或官方人格测评。
+这里的 MBTI-style / SBTI-style 标签只用于描述模型行为倾向，不是临床、心理学或官方人格测评。
 
 ## 如何复现
 
@@ -184,6 +184,14 @@ python -m http.server 5176 --directory web
 http://127.0.0.1:5176/
 ```
 
+GitHub Pages 手动设置：
+
+```text
+Settings -> Pages -> Build and deployment -> Source -> GitHub Actions
+```
+
+设置后 push 到 `main` 会触发 `.github/workflows/pages.yml`，并把 `web/` 目录部署出去。
+
 公开结果只读取：
 
 ```text
@@ -215,11 +223,11 @@ python -m json.tool web/data/results.json
 
 ## 小红书一句话
 
-> 我们随机化了选项标签来降低 A/B/C 偏置。结果 MBTI 不再全是 ESTJ，但 SBTI 仍然 22/23 个完成模型都是 BOSS-like。这说明问题不只是选项位置偏置，而是 LLM 默认 assistant persona 本身就偏稳定、边界、执行和自洽。
+> 我们随机化了选项标签来降低 A/B/C 偏置。结果 MBTI 不再全是 ESTJ，但 SBTI 仍然 22/23 个完成模型都是 BOSS。这说明问题不只是选项位置偏置，而是 LLM 默认 assistant persona 本身就偏稳定、边界、执行和自洽。
 
 ## English Summary
 
-Persona Evals is an open-source MBTI-like and SBTI-style probe suite for LLM and agent behavior. The first public batch evaluates 39 selected model routes, publishes 23 complete scored traces, and randomizes displayed option labels before remapping them back to scoring labels. MBTI-like results diversify after randomization, while SBTI-style results still collapse strongly into BOSS-like behavior.
+Persona Evals is an open-source MBTI-style and SBTI-style probe suite for LLM and agent behavior. The first public batch evaluates 39 selected model routes, publishes 23 complete scored traces, and randomizes displayed option labels before remapping them back to scoring labels. MBTI-style results diversify after randomization, while SBTI-style results still collapse strongly into BOSS behavior.
 
 ## License
 

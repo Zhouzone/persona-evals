@@ -31,11 +31,11 @@
   "conclusions": [
     {
       "title": "MBTI remains varied after label randomization",
-      "body": "The completed random-label batch produced 4 MBTI-like labels across 23 scored models; ESTJ-like is common but no longer the whole story."
+      "body": "The completed random-label batch produced 4 MBTI-style labels across 23 scored models; ESTJ is common but no longer the whole story."
     },
     {
       "title": "SBTI still collapses to BOSS",
-      "body": "All 23 scored models landed on BOSS-like, which points to assistant-norm and item-semantics bias rather than a pure displayed-label artifact."
+      "body": "All 23 scored models landed on BOSS, which points to assistant-norm and item-semantics bias rather than a pure displayed-label artifact."
     },
     {
       "title": "Broken routes are kept out of the leaderboard",
@@ -49,14 +49,14 @@
     "droppedModels": 5,
     "providersWithScoredModels": 11,
     "mbtiCounts": {
-      "ESFP-like": 3,
-      "ESTJ-like": 10,
-      "ESTP-like": 2,
-      "ESFJ-like": 8
+      "ESFP": 3,
+      "ESTJ": 10,
+      "ESTP": 2,
+      "ESFJ": 8
     },
     "sbtiCounts": {
-      "BOSS-like": 22,
-      "DIOR-like": 1
+      "BOSS": 22,
+      "DIOR": 1
     },
     "providerCounts": {
       "openai": 3,
@@ -89,8 +89,8 @@
       "providerGroup": "openai",
       "status": "ok",
       "sourceSummary": "runs/personality-eval/20260415_124106_randfull-a-openai-google-deepseek/summary.jsonl",
-      "mbtiType": "ESFP-like",
-      "sbtiType": "BOSS-like",
+      "mbtiType": "ESFP",
+      "sbtiType": "BOSS",
       "recommendedSkill": {
         "id": "evidence_before_victory",
         "name": "Evidence Before Victory",
@@ -142,8 +142,8 @@
       "providerGroup": "openai",
       "status": "ok",
       "sourceSummary": "runs/personality-eval/20260415_124106_randfull-a-openai-google-deepseek/summary.jsonl",
-      "mbtiType": "ESTJ-like",
-      "sbtiType": "BOSS-like",
+      "mbtiType": "ESTJ",
+      "sbtiType": "BOSS",
       "recommendedSkill": {
         "id": "evidence_before_victory",
         "name": "Evidence Before Victory",
@@ -195,8 +195,8 @@
       "providerGroup": "openai",
       "status": "ok",
       "sourceSummary": "runs/personality-eval/20260415_124106_randfull-a-openai-google-deepseek/summary.jsonl",
-      "mbtiType": "ESTJ-like",
-      "sbtiType": "BOSS-like",
+      "mbtiType": "ESTJ",
+      "sbtiType": "BOSS",
       "recommendedSkill": {
         "id": "evidence_before_victory",
         "name": "Evidence Before Victory",
@@ -248,8 +248,8 @@
       "providerGroup": "anthropic",
       "status": "ok",
       "sourceSummary": "runs/personality-eval/20260415_124107_randfull-b-anthropic/summary.jsonl",
-      "mbtiType": "ESTJ-like",
-      "sbtiType": "BOSS-like",
+      "mbtiType": "ESTJ",
+      "sbtiType": "BOSS",
       "recommendedSkill": {
         "id": "evidence_before_victory",
         "name": "Evidence Before Victory",
@@ -301,8 +301,8 @@
       "providerGroup": "anthropic",
       "status": "ok",
       "sourceSummary": "runs/personality-eval/20260415_124107_randfull-b-anthropic/summary.jsonl",
-      "mbtiType": "ESTJ-like",
-      "sbtiType": "BOSS-like",
+      "mbtiType": "ESTJ",
+      "sbtiType": "BOSS",
       "recommendedSkill": {
         "id": "evidence_before_victory",
         "name": "Evidence Before Victory",
@@ -354,8 +354,8 @@
       "providerGroup": "anthropic",
       "status": "ok",
       "sourceSummary": "runs/personality-eval/20260415_124107_randfull-b-anthropic/summary.jsonl",
-      "mbtiType": "ESTJ-like",
-      "sbtiType": "BOSS-like",
+      "mbtiType": "ESTJ",
+      "sbtiType": "BOSS",
       "recommendedSkill": {
         "id": "evidence_before_victory",
         "name": "Evidence Before Victory",
@@ -407,8 +407,8 @@
       "providerGroup": "qwen",
       "status": "ok",
       "sourceSummary": "runs/personality-eval/20260415_132022_randfull-c-rescue-qwenmax-bytedance-minimax/summary.jsonl",
-      "mbtiType": "ESTJ-like",
-      "sbtiType": "BOSS-like",
+      "mbtiType": "ESTJ",
+      "sbtiType": "BOSS",
       "recommendedSkill": {
         "id": "evidence_before_victory",
         "name": "Evidence Before Victory",
@@ -460,8 +460,8 @@
       "providerGroup": "qwen",
       "status": "ok",
       "sourceSummary": "runs/personality-eval/20260415_124107_randfull-c-qwen-bytedance-minimax/summary.jsonl",
-      "mbtiType": "ESTJ-like",
-      "sbtiType": "BOSS-like",
+      "mbtiType": "ESTJ",
+      "sbtiType": "BOSS",
       "recommendedSkill": {
         "id": "evidence_before_victory",
         "name": "Evidence Before Victory",
@@ -513,8 +513,8 @@
       "providerGroup": "deepseek",
       "status": "ok",
       "sourceSummary": "runs/personality-eval/20260415_125743_randfull-a-rescue-deepseek/summary.jsonl",
-      "mbtiType": "ESFP-like",
-      "sbtiType": "BOSS-like",
+      "mbtiType": "ESFP",
+      "sbtiType": "BOSS",
       "recommendedSkill": {
         "id": "evidence_before_victory",
         "name": "Evidence Before Victory",
@@ -566,8 +566,8 @@
       "providerGroup": "deepseek",
       "status": "ok",
       "sourceSummary": "runs/personality-eval/20260415_125743_randfull-a-rescue-deepseek/summary.jsonl",
-      "mbtiType": "ESTP-like",
-      "sbtiType": "BOSS-like",
+      "mbtiType": "ESTP",
+      "sbtiType": "BOSS",
       "recommendedSkill": {
         "id": "evidence_before_victory",
         "name": "Evidence Before Victory",
@@ -619,8 +619,8 @@
       "providerGroup": "bytedance",
       "status": "ok",
       "sourceSummary": "runs/personality-eval/20260415_134027_randfull-c-rescue-doubao-minimax/summary.jsonl",
-      "mbtiType": "ESFP-like",
-      "sbtiType": "BOSS-like",
+      "mbtiType": "ESFP",
+      "sbtiType": "BOSS",
       "recommendedSkill": {
         "id": "boundary_first",
         "name": "Boundary First",
@@ -672,8 +672,8 @@
       "providerGroup": "moonshot",
       "status": "ok",
       "sourceSummary": "runs/personality-eval/20260415_124106_randfull-d-moonshot-xai-zhipu/summary.jsonl",
-      "mbtiType": "ESFJ-like",
-      "sbtiType": "BOSS-like",
+      "mbtiType": "ESFJ",
+      "sbtiType": "BOSS",
       "recommendedSkill": {
         "id": "evidence_before_victory",
         "name": "Evidence Before Victory",
@@ -725,8 +725,8 @@
       "providerGroup": "xai",
       "status": "ok",
       "sourceSummary": "runs/personality-eval/20260415_124106_randfull-d-moonshot-xai-zhipu/summary.jsonl",
-      "mbtiType": "ESTJ-like",
-      "sbtiType": "BOSS-like",
+      "mbtiType": "ESTJ",
+      "sbtiType": "BOSS",
       "recommendedSkill": {
         "id": "evidence_before_victory",
         "name": "Evidence Before Victory",
@@ -778,8 +778,8 @@
       "providerGroup": "xai",
       "status": "ok",
       "sourceSummary": "runs/personality-eval/20260415_124106_randfull-d-moonshot-xai-zhipu/summary.jsonl",
-      "mbtiType": "ESTJ-like",
-      "sbtiType": "BOSS-like",
+      "mbtiType": "ESTJ",
+      "sbtiType": "BOSS",
       "recommendedSkill": {
         "id": "evidence_before_victory",
         "name": "Evidence Before Victory",
@@ -831,8 +831,8 @@
       "providerGroup": "xai",
       "status": "ok",
       "sourceSummary": "runs/personality-eval/20260415_124106_randfull-d-moonshot-xai-zhipu/summary.jsonl",
-      "mbtiType": "ESTJ-like",
-      "sbtiType": "BOSS-like",
+      "mbtiType": "ESTJ",
+      "sbtiType": "BOSS",
       "recommendedSkill": {
         "id": "evidence_before_victory",
         "name": "Evidence Before Victory",
@@ -884,8 +884,8 @@
       "providerGroup": "zhipu",
       "status": "ok",
       "sourceSummary": "runs/personality-eval/20260415_124106_randfull-d-moonshot-xai-zhipu/summary.jsonl",
-      "mbtiType": "ESFJ-like",
-      "sbtiType": "BOSS-like",
+      "mbtiType": "ESFJ",
+      "sbtiType": "BOSS",
       "recommendedSkill": {
         "id": "evidence_before_victory",
         "name": "Evidence Before Victory",
@@ -937,8 +937,8 @@
       "providerGroup": "meta",
       "status": "ok",
       "sourceSummary": "runs/personality-eval/20260415_124107_randfull-e-meta-mistral-othercn/summary.jsonl",
-      "mbtiType": "ESFJ-like",
-      "sbtiType": "BOSS-like",
+      "mbtiType": "ESFJ",
+      "sbtiType": "BOSS",
       "recommendedSkill": {
         "id": "evidence_before_victory",
         "name": "Evidence Before Victory",
@@ -990,8 +990,8 @@
       "providerGroup": "meta",
       "status": "ok",
       "sourceSummary": "runs/personality-eval/20260415_124107_randfull-e-meta-mistral-othercn/summary.jsonl",
-      "mbtiType": "ESFJ-like",
-      "sbtiType": "BOSS-like",
+      "mbtiType": "ESFJ",
+      "sbtiType": "BOSS",
       "recommendedSkill": {
         "id": "evidence_before_victory",
         "name": "Evidence Before Victory",
@@ -1043,8 +1043,8 @@
       "providerGroup": "meta",
       "status": "ok",
       "sourceSummary": "runs/personality-eval/20260415_124107_randfull-e-meta-mistral-othercn/summary.jsonl",
-      "mbtiType": "ESTP-like",
-      "sbtiType": "BOSS-like",
+      "mbtiType": "ESTP",
+      "sbtiType": "BOSS",
       "recommendedSkill": {
         "id": "boundary_first",
         "name": "Boundary First",
@@ -1096,8 +1096,8 @@
       "providerGroup": "mistral",
       "status": "ok",
       "sourceSummary": "runs/personality-eval/20260415_124107_randfull-e-meta-mistral-othercn/summary.jsonl",
-      "mbtiType": "ESFJ-like",
-      "sbtiType": "BOSS-like",
+      "mbtiType": "ESFJ",
+      "sbtiType": "BOSS",
       "recommendedSkill": {
         "id": "evidence_before_victory",
         "name": "Evidence Before Victory",
@@ -1149,8 +1149,8 @@
       "providerGroup": "mistral",
       "status": "ok",
       "sourceSummary": "runs/personality-eval/20260415_124107_randfull-e-meta-mistral-othercn/summary.jsonl",
-      "mbtiType": "ESFJ-like",
-      "sbtiType": "BOSS-like",
+      "mbtiType": "ESFJ",
+      "sbtiType": "BOSS",
       "recommendedSkill": {
         "id": "evidence_before_victory",
         "name": "Evidence Before Victory",
@@ -1202,8 +1202,8 @@
       "providerGroup": "mistral",
       "status": "ok",
       "sourceSummary": "runs/personality-eval/20260415_124107_randfull-e-meta-mistral-othercn/summary.jsonl",
-      "mbtiType": "ESFJ-like",
-      "sbtiType": "BOSS-like",
+      "mbtiType": "ESFJ",
+      "sbtiType": "BOSS",
       "recommendedSkill": {
         "id": "evidence_before_victory",
         "name": "Evidence Before Victory",
@@ -1255,8 +1255,8 @@
       "providerGroup": "other_cn",
       "status": "ok",
       "sourceSummary": "runs/personality-eval/20260415_132123_randfull-e-rescue-stepfun-ling/summary.jsonl",
-      "mbtiType": "ESFJ-like",
-      "sbtiType": "DIOR-like",
+      "mbtiType": "ESFJ",
+      "sbtiType": "DIOR",
       "recommendedSkill": {
         "id": "boundary_first",
         "name": "Boundary First",

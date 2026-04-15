@@ -1,5 +1,6 @@
 import json
 from pathlib import Path
+import re
 import unittest
 
 
@@ -7,6 +8,26 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class WebResultsDataTests(unittest.TestCase):
+    def test_public_results_do_not_use_legacy_suffix_on_persona_labels(self):
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        html = (ROOT / "web" / "index.html").read_text(encoding="utf-8")
+        data = json.loads((ROOT / "web" / "data" / "results.json").read_text(encoding="utf-8"))
+        legacy_suffix = "-li" + "ke"
+
+        public_text = "\n".join(
+            [
+                readme,
+                html,
+                json.dumps(data["summary"], ensure_ascii=False),
+                json.dumps(data["conclusions"], ensure_ascii=False),
+                json.dumps(data["runs"], ensure_ascii=False),
+            ]
+        )
+
+        self.assertIsNone(
+            re.search(rf"\b(?:[EINSPTFJ]{{4}}|BOSS|DIOR){legacy_suffix}\b", public_text)
+        )
+
     def test_site_loads_results_from_editable_json_file(self):
         html = (ROOT / "web" / "index.html").read_text(encoding="utf-8")
         app = (ROOT / "web" / "app.js").read_text(encoding="utf-8")

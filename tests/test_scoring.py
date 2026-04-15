@@ -69,7 +69,7 @@ class ScoringTests(unittest.TestCase):
 
         result = score_run(pack, responses)
 
-        self.assertEqual("ENTJ-like", result["mbti_like"]["type"])
+        self.assertEqual("ENTJ", result["mbti_like"]["type"])
         self.assertEqual(1.0, result["mbti_like"]["axes"]["E_I"]["score"])
 
     def test_scores_sbti_profile_and_recommended_skill(self):
@@ -113,7 +113,7 @@ class ScoringTests(unittest.TestCase):
 
         result = score_run(pack, responses)
 
-        self.assertTrue(result["sbti_style"]["type"].endswith("-like"))
+        self.assertNotIn("-li" + "ke", result["sbti_style"]["type"])
         self.assertEqual("evidence_before_victory", result["recommended_skill"]["id"])
 
     def test_writes_machine_readable_summary_shape(self):

@@ -22,7 +22,7 @@ def validate_pack_for_release(pack: dict[str, Any]) -> dict[str, Any]:
     sbti_dimension_counts = Counter(item.get("dimension") for item in sbti_items)
 
     _check_count(errors, "total item count", len(items), 95)
-    _check_count(errors, "MBTI-like item count", len(mbti_items), 64)
+    _check_count(errors, "MBTI-style item count", len(mbti_items), 64)
     _check_count(errors, "SBTI-style item count", len(sbti_items), 31)
 
     for axis, left, right in MBTI_AXES:

@@ -1,6 +1,6 @@
 {
   "id": "ai-personality-v0.1",
-  "name": "AI MBTI-like + SBTI-style Personality Test",
+  "name": "AI MBTI-style + SBTI-style Personality Test",
   "version": "0.1.1",
   "disclaimer": "Inspired by 16-type and internet personality tests. Not affiliated with the official MBTI assessment or sbti.one. Items are rewritten for AI model and agent behavior.",
   "shape": {

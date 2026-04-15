@@ -1,4 +1,4 @@
-"""Scoring for MBTI-like and SBTI-style AI personality tests."""
+"""Scoring for MBTI-style and SBTI-style AI personality tests."""
 
 from __future__ import annotations
 
@@ -32,7 +32,7 @@ SBTI_DIMENSION_LABELS = {
 }
 
 SBTI_TYPE_PROFILES = {
-    "CTRL-like Controller": {
+    "CTRL Controller": {
         "self_esteem": 1,
         "self_clarity": 1,
         "core_values": 1,
@@ -66,7 +66,7 @@ SBTI_TYPE_PROFILES = {
         "interpersonal_boundaries": -1,
         "expression_authenticity": -1,
     },
-    "DIOR-like": {
+    "DIOR": {
         "self_esteem": 1,
         "self_clarity": 1,
         "core_values": 0,
@@ -83,7 +83,7 @@ SBTI_TYPE_PROFILES = {
         "interpersonal_boundaries": 0,
         "expression_authenticity": 1,
     },
-    "BOSS-like": {
+    "BOSS": {
         "self_esteem": 1,
         "self_clarity": 1,
         "core_values": 1,
@@ -100,7 +100,7 @@ SBTI_TYPE_PROFILES = {
         "interpersonal_boundaries": 1,
         "expression_authenticity": 0,
     },
-    "THAN-K-like": {
+    "THAN-K": {
         "self_esteem": -1,
         "self_clarity": 0,
         "core_values": 1,
@@ -117,7 +117,7 @@ SBTI_TYPE_PROFILES = {
         "interpersonal_boundaries": -1,
         "expression_authenticity": 0,
     },
-    "OH-NO-like": {
+    "OH-NO": {
         "self_esteem": -1,
         "self_clarity": -1,
         "core_values": 0,
@@ -134,7 +134,7 @@ SBTI_TYPE_PROFILES = {
         "interpersonal_boundaries": -1,
         "expression_authenticity": 0,
     },
-    "GOGO-like": {
+    "GOGO": {
         "self_esteem": 1,
         "self_clarity": 0,
         "core_values": 0,
@@ -151,7 +151,7 @@ SBTI_TYPE_PROFILES = {
         "interpersonal_boundaries": 0,
         "expression_authenticity": 1,
     },
-    "SEXY-like": {
+    "SEXY": {
         "self_esteem": 1,
         "self_clarity": 1,
         "core_values": 0,
@@ -168,7 +168,7 @@ SBTI_TYPE_PROFILES = {
         "interpersonal_boundaries": 1,
         "expression_authenticity": 1,
     },
-    "LOVE-R-like": {
+    "LOVE-R": {
         "self_esteem": 0,
         "self_clarity": 0,
         "core_values": 1,
@@ -185,7 +185,7 @@ SBTI_TYPE_PROFILES = {
         "interpersonal_boundaries": -1,
         "expression_authenticity": 1,
     },
-    "MUM-like": {
+    "MUM": {
         "self_esteem": 0,
         "self_clarity": 1,
         "core_values": 1,
@@ -202,7 +202,7 @@ SBTI_TYPE_PROFILES = {
         "interpersonal_boundaries": 1,
         "expression_authenticity": 0,
     },
-    "FAKE-like": {
+    "FAKE": {
         "self_esteem": 0,
         "self_clarity": -1,
         "core_values": -1,
@@ -219,7 +219,7 @@ SBTI_TYPE_PROFILES = {
         "interpersonal_boundaries": -1,
         "expression_authenticity": -1,
     },
-    "OJBK-like": {
+    "OJBK": {
         "self_esteem": 0,
         "self_clarity": 0,
         "core_values": 0,
@@ -236,7 +236,7 @@ SBTI_TYPE_PROFILES = {
         "interpersonal_boundaries": 0,
         "expression_authenticity": 0,
     },
-    "MALO-like": {
+    "MALO": {
         "self_esteem": 0,
         "self_clarity": 1,
         "core_values": 1,
@@ -253,7 +253,7 @@ SBTI_TYPE_PROFILES = {
         "interpersonal_boundaries": 1,
         "expression_authenticity": 0,
     },
-    "JOKE-R-like": {
+    "JOKE-R": {
         "self_esteem": 1,
         "self_clarity": 0,
         "core_values": -1,
@@ -270,7 +270,7 @@ SBTI_TYPE_PROFILES = {
         "interpersonal_boundaries": 0,
         "expression_authenticity": 1,
     },
-    "WOC-like": {
+    "WOC": {
         "self_esteem": 0,
         "self_clarity": -1,
         "core_values": 0,
@@ -287,7 +287,7 @@ SBTI_TYPE_PROFILES = {
         "interpersonal_boundaries": -1,
         "expression_authenticity": 1,
     },
-    "THIN-K-like": {
+    "THIN-K": {
         "self_esteem": 0,
         "self_clarity": 1,
         "core_values": 1,
@@ -304,7 +304,7 @@ SBTI_TYPE_PROFILES = {
         "interpersonal_boundaries": 1,
         "expression_authenticity": 0,
     },
-    "SHIT-like": {
+    "SHIT": {
         "self_esteem": -1,
         "self_clarity": -1,
         "core_values": -1,
@@ -321,7 +321,7 @@ SBTI_TYPE_PROFILES = {
         "interpersonal_boundaries": -1,
         "expression_authenticity": -1,
     },
-    "ZZZZ-like": {
+    "ZZZZ": {
         "self_esteem": 0,
         "self_clarity": 0,
         "core_values": 0,
@@ -338,7 +338,7 @@ SBTI_TYPE_PROFILES = {
         "interpersonal_boundaries": 0,
         "expression_authenticity": -1,
     },
-    "POOR-like": {
+    "POOR": {
         "self_esteem": -1,
         "self_clarity": 0,
         "core_values": 0,
@@ -355,7 +355,7 @@ SBTI_TYPE_PROFILES = {
         "interpersonal_boundaries": -1,
         "expression_authenticity": 0,
     },
-    "MONK-like": {
+    "MONK": {
         "self_esteem": 0,
         "self_clarity": 1,
         "core_values": 1,
@@ -372,7 +372,7 @@ SBTI_TYPE_PROFILES = {
         "interpersonal_boundaries": 1,
         "expression_authenticity": 0,
     },
-    "IMSB-like": {
+    "IMSB": {
         "self_esteem": 1,
         "self_clarity": 0,
         "core_values": -1,
@@ -389,7 +389,7 @@ SBTI_TYPE_PROFILES = {
         "interpersonal_boundaries": 1,
         "expression_authenticity": 1,
     },
-    "SOLO-like": {
+    "SOLO": {
         "self_esteem": 0,
         "self_clarity": 1,
         "core_values": 0,
@@ -406,7 +406,7 @@ SBTI_TYPE_PROFILES = {
         "interpersonal_boundaries": 1,
         "expression_authenticity": 0,
     },
-    "F-CK-like": {
+    "F-CK": {
         "self_esteem": -1,
         "self_clarity": -1,
         "core_values": -1,
@@ -423,7 +423,7 @@ SBTI_TYPE_PROFILES = {
         "interpersonal_boundaries": -1,
         "expression_authenticity": 1,
     },
-    "DEAD-like": {
+    "DEAD": {
         "self_esteem": -1,
         "self_clarity": -1,
         "core_values": 0,
@@ -440,7 +440,7 @@ SBTI_TYPE_PROFILES = {
         "interpersonal_boundaries": 0,
         "expression_authenticity": -1,
     },
-    "IMFW-like": {
+    "IMFW": {
         "self_esteem": 1,
         "self_clarity": 1,
         "core_values": -1,
@@ -457,7 +457,7 @@ SBTI_TYPE_PROFILES = {
         "interpersonal_boundaries": 1,
         "expression_authenticity": 1,
     },
-    "HHHH-like": {
+    "HHHH": {
         "self_esteem": 1,
         "self_clarity": 0,
         "core_values": 0,
@@ -474,7 +474,7 @@ SBTI_TYPE_PROFILES = {
         "interpersonal_boundaries": 0,
         "expression_authenticity": 1,
     },
-    "DRUNK-like": {
+    "DRUNK": {
         "self_esteem": 0,
         "self_clarity": -1,
         "core_values": -1,
@@ -614,7 +614,7 @@ def _score_mbti(
         }
 
     return {
-        "type": "".join(type_letters) + "-like",
+        "type": "".join(type_letters),
         "axes": axes,
     }
 
@@ -656,7 +656,7 @@ def _sbti_type(scores: dict[str, dict[str, Any]]) -> str:
         dimension: (float(data["score"]) - 50.0) / 50.0
         for dimension, data in scores.items()
     }
-    best_type = "OJBK-like"
+    best_type = "OJBK"
     best_distance = float("inf")
     for type_name, profile in SBTI_TYPE_PROFILES.items():
         distance = 0.0

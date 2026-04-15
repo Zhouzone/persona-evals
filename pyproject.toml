@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "persona-evals"
 version = "0.1.0"
-description = "MBTI-like and SBTI-style persona probes for LLM and agent behavior."
+description = "MBTI-style and SBTI-style persona probes for LLM and agent behavior."
 requires-python = ">=3.10"
 dependencies = []
 
