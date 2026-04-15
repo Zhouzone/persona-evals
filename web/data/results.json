@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-04-15T06:11:29.927128+00:00",
-  "batchLabel": "随机选项完整批次 2026-04-15",
+  "batchLabel": "公开结果",
   "optionLabelMode": "randomized",
   "pack": {
     "id": "ai-personality-v0.1",
@@ -30,16 +30,16 @@
   },
   "conclusions": [
     {
-      "title": "随机化后，MBTI-style 不再单一",
-      "body": "23 个完整计分模型产生了 4 种 MBTI-style 标签。ESTJ 仍然常见，但已经不是全部故事。"
+      "title": "MBTI-style 出现多种标签",
+      "body": "这批模型产生了 4 种 MBTI-style 标签。ESTJ 仍然常见，但 ESFJ、ESFP、ESTP 也稳定出现。"
     },
     {
-      "title": "SBTI-style 仍然集中到 BOSS",
-      "body": "22/23 个完整计分模型落在 BOSS。这更像是 assistant 默认规范与题目语义共同造成的偏置，而不只是选项位置偏置。"
+      "title": "SBTI-style 更集中",
+      "body": "大多数模型落在 BOSS，说明很多 assistant 默认会选择更稳定、负责、边界清晰的回答方式。"
     },
     {
-      "title": "失败链路不进入公开榜单",
-      "body": "11 个模型返回 API 或解析错误，5 个模型因链路停滞被移除。它们保留在 diagnostics，不混入公开结果表。"
+      "title": "不同模型的差异适合继续追踪",
+      "body": "同一套题下，模型来源、训练风格和默认 assistant 规范都会影响最终标签。后续可以把任务表现和人格标签放在一起看。"
     }
   ],
   "summary": {

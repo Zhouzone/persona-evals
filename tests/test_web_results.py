@@ -48,7 +48,7 @@ class WebResultsDataTests(unittest.TestCase):
         self.assertIn(".theme-toggle", styles)
         self.assertIn("persona-evals-theme", app)
         self.assertNotIn("rerun needed", app)
-        self.assertIn("无完整 trace", app)
+        self.assertIn("暂无可复核记录", app)
         self.assertIn('id="provider-coverage"', html)
         self.assertIn('id="provider-grid"', html)
         self.assertIn('id="conclusions"', html)
@@ -99,6 +99,42 @@ class WebResultsDataTests(unittest.TestCase):
             self.assertIn("sbtiType", run)
             self.assertIn("recommendedSkill", run)
             self.assertEqual({"E_I", "S_N", "T_F", "J_P"}, set(run["axes"]))
+
+    def test_public_site_uses_audience_facing_copy(self):
+        html = (ROOT / "web" / "index.html").read_text(encoding="utf-8")
+        app = (ROOT / "web" / "app.js").read_text(encoding="utf-8")
+        data = json.loads((ROOT / "web" / "data" / "results.json").read_text(encoding="utf-8"))
+
+        public_source = "\n".join([html, app, json.dumps(data["conclusions"], ensure_ascii=False)])
+        hidden_copy = [
+            "随机选项完整批次",
+            "ai-personality-v0.1",
+            "只展示完整跑完且可计分的模型结果",
+            "随机化选项后，故事变得更清楚",
+            "按厂商统计的公开结果",
+            "runs/personality-eval",
+            "sourceSummary",
+            "source-path",
+            "建议技能",
+            "干预提示词",
+            "网关",
+            "题库如何改写",
+            "每道题使用的 Prompt",
+            "User template",
+            "operator-run",
+        ]
+        for phrase in hidden_copy:
+            self.assertNotIn(phrase, public_source)
+
+        self.assertIn("评测流程", html)
+        self.assertIn("题库参考大众熟悉的 MBTI/SBTI 问题形式", html)
+        self.assertIn("随机化选项", html)
+        self.assertIn("逐题记录", html)
+        self.assertIn("映射计分", html)
+        self.assertIn("搜索模型、厂商或人格标签", html)
+        self.assertIn('id="result-search"', html)
+        self.assertIn('id="filter-bar"', html)
+        self.assertIn("renderFilters", app)
 
 
 if __name__ == "__main__":

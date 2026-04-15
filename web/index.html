@@ -27,12 +27,11 @@
         <span>Persona</span><span class="brand-accent">Evals</span>
       </a>
       <div class="nav-links">
-        <a href="#results">结果</a>
+        <a href="#harness">流程</a>
         <a href="#conclusions">发现</a>
+        <a href="#results">结果</a>
         <a href="#provider-coverage">覆盖</a>
         <a href="#cards">卡片</a>
-        <a href="#method">方法</a>
-        <a href="#harness">流程</a>
         <a href="https://github.com/Zhouzone/persona-evals" aria-label="GitHub 仓库">GitHub</a>
         <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换主题">
           <span class="theme-icon" aria-hidden="true">☾</span>
@@ -45,8 +44,8 @@
       <section class="hero-section" id="results">
         <div class="hero-inner">
           <div class="eyebrow-row">
-            <span class="eyebrow" id="batch-label">批量评测</span>
-            <span class="eyebrow muted" id="pack-version">loading</span>
+            <span class="eyebrow">MBTI / SBTI</span>
+            <span class="eyebrow muted">模型行为探针</span>
           </div>
 
           <h1>
@@ -62,8 +61,25 @@
           <div class="visual-strip" aria-label="研究图谱纹理">
             <img src="./assets/seevomap-hero.png" alt="研究图谱纹理" />
             <div>
-              <span>公开批次快照</span>
-              <strong>只展示完整跑完且可计分的模型结果。</strong>
+              <span>同一套题，不同模型</span>
+              <strong>比较模型在相同人格题下的选择差异。</strong>
+            </div>
+          </div>
+
+          <div class="flow-shell" id="harness" aria-label="评测流程">
+            <div class="section-heading">
+              <div>
+                <p class="section-kicker">评测流程</p>
+                <h2>从人格题库到模型标签</h2>
+              </div>
+              <p>每个模型回答同一套题，选项顺序会被打乱，最后按相同规则映射为 MBTI-style 与 SBTI-style 标签。</p>
+            </div>
+
+            <div class="flow-grid">
+              <div class="flow-step"><span>01</span><strong>题库</strong><p>题库参考大众熟悉的 MBTI/SBTI 问题形式，改写为模型在任务中的选择。</p></div>
+              <div class="flow-step"><span>02</span><strong>随机化选项</strong><p>每题展示时打乱 A/B/C 顺序，减少位置偏好和迎合测试结构。</p></div>
+              <div class="flow-step"><span>03</span><strong>逐题记录</strong><p>记录每道题的选择、置信度和简短理由，形成可复核 trace。</p></div>
+              <div class="flow-step"><span>04</span><strong>映射计分</strong><p>把随机选项映射回计分轴，得到 MBTI-style 和 SBTI-style 标签。</p></div>
             </div>
           </div>
 
@@ -71,9 +87,9 @@
             <div class="section-heading">
               <div>
                 <p class="section-kicker">当前发现</p>
-                <h2>随机化选项后，故事变得更清楚</h2>
+                <h2>模型人格并不完全收敛</h2>
               </div>
-              <p>每道题都会打乱展示选项，再在 trace 中映射回原始计分标签。</p>
+              <p>选项顺序打乱后，MBTI-style 出现多种结果；SBTI-style 仍明显集中。</p>
             </div>
             <ul class="conclusion-list" id="conclusion-list"></ul>
           </div>
@@ -82,9 +98,9 @@
             <div class="section-heading">
               <div>
                 <p class="section-kicker">模型覆盖</p>
-                <h2>按厂商统计的公开结果</h2>
+                <h2>模型来源覆盖</h2>
               </div>
-              <p>公开计数只包含完整 trace，不把失败链路混进榜单。</p>
+              <p>这批样本覆盖多个模型来源，方便观察结果是否只来自某一类模型。</p>
             </div>
             <div class="provider-grid" id="provider-grid"></div>
           </div>
@@ -97,17 +113,22 @@
               </div>
               <p id="result-count"></p>
             </div>
+            <div class="result-tools" aria-label="结果筛选">
+              <label class="search-box" for="result-search">
+                <span>快速查找</span>
+                <input id="result-search" type="search" placeholder="搜索模型、厂商或人格标签" autocomplete="off" />
+              </label>
+              <div class="filter-bar" id="filter-bar" aria-label="筛选标签"></div>
+            </div>
             <div class="table-scroll">
               <table>
                 <thead>
                   <tr>
                     <th>模型</th>
                     <th>厂商</th>
-                    <th>状态</th>
                     <th>MBTI-style</th>
                     <th>SBTI-style</th>
-                    <th>轴签名</th>
-                    <th>建议技能</th>
+                    <th>四轴倾向</th>
                   </tr>
                 </thead>
                 <tbody id="leaderboard-body"></tbody>
@@ -124,50 +145,9 @@
               <p class="section-kicker">传播卡片</p>
               <h2>模型人格卡片</h2>
             </div>
-            <p>每张卡片都来自完整逐题 trace，适合截图传播和后续复核。</p>
+            <p>卡片展示模型标签和四轴倾向，适合快速比较或截图传播。</p>
           </div>
           <div class="card-grid" id="model-cards"></div>
-        </div>
-      </section>
-
-      <section class="content-band alt" id="method">
-        <div class="content-inner two-column">
-          <div>
-            <p class="section-kicker">方法</p>
-            <h2>题库如何改写</h2>
-            <p class="body-copy">
-              题库保留大众熟悉的人格测试结构，但每道题都改写成 assistant 或 agent 的运行决策。答题过程中模型不会看到 MBTI 或 SBTI 标签。
-            </p>
-            <ul class="method-list" id="refinement-list"></ul>
-          </div>
-
-          <div class="prompt-panel">
-            <h3>每道题使用的 Prompt</h3>
-            <p class="panel-label">System</p>
-            <pre id="system-prompt"></pre>
-            <p class="panel-label">User template</p>
-            <pre id="user-prompt"></pre>
-          </div>
-        </div>
-      </section>
-
-      <section class="content-band" id="harness">
-        <div class="content-inner">
-          <div class="section-heading">
-            <div>
-              <p class="section-kicker">Harness</p>
-              <h2>批量评测流程</h2>
-            </div>
-            <p>第一版先服务我们的批量模型评测，后续再扩展到开发者填 API key 一键运行。</p>
-          </div>
-
-          <div class="flow-grid">
-            <div class="flow-step"><span>01</span><strong>题库</strong><p>95 道强制选择题。</p></div>
-            <div class="flow-step"><span>02</span><strong>网关</strong><p>OpenAI-compatible 中转路线。</p></div>
-            <div class="flow-step"><span>03</span><strong>Trace</strong><p>每个模型保留一份 JSON 轨迹。</p></div>
-            <div class="flow-step"><span>04</span><strong>计分</strong><p>输出轴、SBTI profile 与技能建议。</p></div>
-            <div class="flow-step"><span>05</span><strong>发布</strong><p>生成静态数据文件供网站读取。</p></div>
-          </div>
         </div>
       </section>
     </main>

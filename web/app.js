@@ -1,21 +1,23 @@
 const axisOrder = ["E_I", "S_N", "T_F", "J_P"];
-const statusRank = { ok: 0, error: 1, skipped: 2 };
 
 const nodes = {
-  batchLabel: document.querySelector("#batch-label"),
-  packVersion: document.querySelector("#pack-version"),
   themeToggle: document.querySelector("#theme-toggle"),
   themeLabel: document.querySelector("#theme-label"),
   themeIcon: document.querySelector(".theme-icon"),
   metricGrid: document.querySelector("#metric-grid"),
   providerGrid: document.querySelector("#provider-grid"),
   resultCount: document.querySelector("#result-count"),
+  resultSearch: document.querySelector("#result-search"),
+  filterBar: document.querySelector("#filter-bar"),
   leaderboardBody: document.querySelector("#leaderboard-body"),
   modelCards: document.querySelector("#model-cards"),
   conclusionList: document.querySelector("#conclusion-list"),
-  refinementList: document.querySelector("#refinement-list"),
-  systemPrompt: document.querySelector("#system-prompt"),
-  userPrompt: document.querySelector("#user-prompt"),
+};
+
+const state = {
+  data: null,
+  filter: "all",
+  query: "",
 };
 
 const THEME_STORAGE_KEY = "persona-evals-theme";
@@ -42,6 +44,13 @@ function initTheme() {
   nodes.themeToggle?.addEventListener("click", () => {
     const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
     setTheme(next);
+  });
+}
+
+function initSearch() {
+  nodes.resultSearch?.addEventListener("input", (event) => {
+    state.query = event.target.value;
+    updateResultViews();
   });
 }
 
@@ -89,55 +98,25 @@ function providerLabel(providerGroup) {
   return labels[providerGroup] || text(providerGroup, "unknown");
 }
 
-function labelModeText(value) {
-  if (value === "randomized") return "随机选项";
-  return text(value);
-}
-
-function statusLabel(run) {
-  if (run.status === "ok") return "已计分";
-  if (run.status === "error") return "运行失败";
-  return "已停止";
-}
-
 function publishedRuns(data) {
   return (data.runs || []).filter((run) => run.status === "ok");
 }
 
+function sortedRuns(data) {
+  return publishedRuns(data).sort((a, b) => {
+    const byProvider = text(a.providerGroup).localeCompare(text(b.providerGroup));
+    return byProvider || text(a.displayName).localeCompare(text(b.displayName));
+  });
+}
+
 function axisSignature(run) {
-  if (!run.axes) return "无完整 trace";
+  if (!run.axes) return "暂无可复核记录";
   return axisOrder.map((key) => run.axes[key]?.chosen || "?").join("");
 }
 
 function profileLabel(run, key) {
-  if (run.status !== "ok") return "无完整 trace";
-  return text(run[key], "无完整 trace");
-}
-
-function runNote(run) {
-  if (run.status === "ok") return skillNameText(run.recommendedSkill);
-  if (run.errorType) return `${run.errorType}: ${text(run.error, "无完整 trace")}`;
-  return text(run.error, "无完整 trace");
-}
-
-function skillNameText(skill) {
-  const labels = {
-    evidence_before_victory: "先证据后胜利",
-    boundary_first: "边界优先",
-    calm_failure: "稳定处理失败",
-    stop_loss_replan: "止损并重规划",
-  };
-  return labels[skill?.id] || text(skill?.name);
-}
-
-function skillPromptText(run) {
-  const prompts = {
-    evidence_before_victory: "在宣称成功前，先引用具体证据：测试结果、日志、可复现输出或已检查约束。证据不足时，明确不确定性并给出下一步最稳妥动作。",
-    boundary_first: "当用户压力、任务目标或成功指标与系统规则或证据冲突时，先保住边界，再说明合规且安全的替代路径。",
-    calm_failure: "遇到失败、低分或反复报错时，先稳定状态、复述已知事实，再缩小问题范围，避免为了挽回局面而过度迎合。",
-    stop_loss_replan: "当当前路线证据不足或成本继续上升时，及时止损，说明放弃原因，并给出新的最小可验证计划。",
-  };
-  return prompts[run.recommendedSkill?.id] || run.recommendedSkill?.prompt;
+  if (run.status !== "ok") return "暂无可复核记录";
+  return text(run[key], "暂无可复核记录");
 }
 
 function renderMetrics(data) {
@@ -146,12 +125,12 @@ function renderMetrics(data) {
   const mbtiTypes = new Set(runs.map((run) => run.mbtiType).filter(Boolean)).size;
   const sbtiTypes = new Set(runs.map((run) => run.sbtiType).filter(Boolean)).size;
   const metrics = [
-    ["完成模型", runs.length],
-    ["覆盖厂商", providers],
-    ["题目数量", data.pack.totalItems],
-    ["MBTI 类型", mbtiTypes],
-    ["SBTI 类型", sbtiTypes],
-    ["选项模式", labelModeText(data.optionLabelMode || "randomized")],
+    ["模型数", runs.length],
+    ["来源数", providers],
+    ["题库规模", data.pack.totalItems],
+    ["MBTI 标签", mbtiTypes],
+    ["SBTI 标签", sbtiTypes],
+    ["选项顺序", "已打乱"],
   ];
 
   nodes.metricGrid.replaceChildren(
@@ -173,33 +152,29 @@ function providerStats(runs) {
   runs.forEach((run) => {
     const key = text(run.providerGroup, "unknown");
     if (!groups.has(key)) {
-      groups.set(key, { providerGroup: key, total: 0, scored: 0, failed: 0, stopped: 0 });
+      groups.set(key, { providerGroup: key, total: 0 });
     }
-    const group = groups.get(key);
-    group.total += 1;
-    if (run.status === "ok") group.scored += 1;
-    if (run.status === "error") group.failed += 1;
-    if (run.status === "skipped") group.stopped += 1;
+    groups.get(key).total += 1;
   });
-  return [...groups.values()];
+  return [...groups.values()].sort((a, b) => b.total - a.total || providerLabel(a.providerGroup).localeCompare(providerLabel(b.providerGroup)));
 }
 
 function renderProviderCoverage(data) {
   const groups = providerStats(publishedRuns(data));
+  const maxCount = Math.max(...groups.map((group) => group.total), 1);
   nodes.providerGrid.replaceChildren(
     ...groups.map((group) => {
-      const rate = group.scored / Math.max(group.total, 1);
       const item = document.createElement("article");
-      item.className = group.failed || group.stopped ? "provider-card has-failures" : "provider-card";
+      item.className = "provider-card";
       item.innerHTML = `
         <div class="provider-topline">
           <span>${escapeHtml(providerLabel(group.providerGroup))}</span>
-          <strong>${group.scored}/${group.total}</strong>
+          <strong>${group.total}</strong>
         </div>
-        <div class="provider-track" aria-label="${escapeHtml(providerLabel(group.providerGroup))} ${group.scored} 条公开 trace，共 ${group.total} 条">
-          <i style="width: ${pct(rate)}"></i>
+        <div class="provider-track" aria-label="${escapeHtml(providerLabel(group.providerGroup))} ${group.total} 个模型">
+          <i style="width: ${pct(group.total / maxCount)}"></i>
         </div>
-        <p>${group.scored} 条公开 trace</p>
+        <p>${group.total} 个模型样本</p>
       `;
       return item;
     }),
@@ -208,7 +183,7 @@ function renderProviderCoverage(data) {
 
 function renderAxisBars(run) {
   if (!run.axes) {
-    return `<span class="axis-empty">${escapeHtml(text(run.error, "无完整 trace"))}</span>`;
+    return `<span class="axis-empty">${escapeHtml("暂无可复核记录")}</span>`;
   }
 
   return axisOrder
@@ -230,59 +205,141 @@ function renderAxisBars(run) {
     .join("");
 }
 
-function renderLeaderboard(data) {
-  const rows = publishedRuns(data).sort((a, b) => {
-    const byStatus = (statusRank[a.status] ?? 9) - (statusRank[b.status] ?? 9);
-    const byProvider = text(a.providerGroup).localeCompare(text(b.providerGroup));
-    return byStatus || byProvider || text(a.displayName).localeCompare(text(b.displayName));
+function countValues(runs, key) {
+  const counts = new Map();
+  runs.forEach((run) => {
+    const value = run[key];
+    if (value) counts.set(value, (counts.get(value) || 0) + 1);
   });
+  return [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+}
 
-  nodes.resultCount.textContent = `${rows.length} 条已计分 trace`;
+function renderFilters(data) {
+  const runs = publishedRuns(data);
+  const providerPriority = ["openai", "anthropic", "qwen", "deepseek", "xai", "meta", "mistral"];
+  const availableProviders = new Set(runs.map((run) => run.providerGroup));
+  const filters = [
+    { label: "全部", value: "all", count: runs.length },
+    ...providerPriority
+      .filter((provider) => availableProviders.has(provider))
+      .map((provider) => ({
+        label: providerLabel(provider),
+        value: `provider:${provider}`,
+        count: runs.filter((run) => run.providerGroup === provider).length,
+      })),
+    ...countValues(runs, "mbtiType")
+      .slice(0, 4)
+      .map(([label, count]) => ({ label, value: `mbti:${label}`, count })),
+    ...countValues(runs, "sbtiType")
+      .slice(0, 3)
+      .map(([label, count]) => ({ label, value: `sbti:${label}`, count })),
+  ];
+
+  nodes.filterBar.replaceChildren(
+    ...filters.map((filter) => {
+      const button = document.createElement("button");
+      button.className = filter.value === state.filter ? "filter-chip active" : "filter-chip";
+      button.type = "button";
+      button.dataset.filter = filter.value;
+      button.textContent = `${filter.label} ${filter.count}`;
+      button.addEventListener("click", () => {
+        state.filter = filter.value;
+        renderFilters(data);
+        updateResultViews();
+      });
+      return button;
+    }),
+  );
+}
+
+function filterMatches(run) {
+  if (state.filter === "all") return true;
+  const [kind, value] = state.filter.split(":");
+  if (kind === "provider") return run.providerGroup === value;
+  if (kind === "mbti") return run.mbtiType === value;
+  if (kind === "sbti") return run.sbtiType === value;
+  return true;
+}
+
+function searchMatches(run) {
+  const query = state.query.trim().toLowerCase();
+  if (!query) return true;
+  const searchable = [
+    run.displayName,
+    run.model,
+    providerLabel(run.providerGroup),
+    run.mbtiType,
+    run.sbtiType,
+    axisSignature(run),
+  ]
+    .map((value) => text(value, "").toLowerCase())
+    .join(" ");
+  return searchable.includes(query);
+}
+
+function visibleRuns() {
+  return sortedRuns(state.data).filter((run) => filterMatches(run) && searchMatches(run));
+}
+
+function renderLeaderboardRows(rows, total) {
+  nodes.resultCount.textContent = `显示 ${rows.length} / ${total} 个模型`;
+  if (!rows.length) {
+    nodes.leaderboardBody.innerHTML = `
+      <tr>
+        <td class="result-empty" colspan="5">没有匹配的模型，换一个关键词或筛选标签试试。</td>
+      </tr>
+    `;
+    return;
+  }
+
   nodes.leaderboardBody.replaceChildren(
     ...rows.map((run) => {
       const row = document.createElement("tr");
-      row.className = `run-${run.status}`;
       row.innerHTML = `
         <td><strong>${escapeHtml(text(run.displayName, run.model))}</strong><span>${escapeHtml(run.model)}</span></td>
         <td>${escapeHtml(providerLabel(run.providerGroup))}</td>
-        <td><mark class="status-pill ${escapeHtml(run.status)}">${escapeHtml(statusLabel(run))}</mark></td>
-        <td>${escapeHtml(profileLabel(run, "mbtiType"))}</td>
-        <td>${escapeHtml(profileLabel(run, "sbtiType"))}</td>
+        <td><mark class="type-pill">${escapeHtml(profileLabel(run, "mbtiType"))}</mark></td>
+        <td><mark class="type-pill muted">${escapeHtml(profileLabel(run, "sbtiType"))}</mark></td>
         <td><code>${escapeHtml(axisSignature(run))}</code></td>
-        <td>${escapeHtml(runNote(run))}</td>
       `;
       return row;
     }),
   );
 }
 
-function renderCards(data) {
-  const rows = publishedRuns(data).sort((a, b) => {
-    const byStatus = (statusRank[a.status] ?? 9) - (statusRank[b.status] ?? 9);
-    const byProvider = text(a.providerGroup).localeCompare(text(b.providerGroup));
-    return byStatus || byProvider || text(a.displayName).localeCompare(text(b.displayName));
-  });
+function renderCardsRows(rows) {
+  if (!rows.length) {
+    nodes.modelCards.innerHTML = `<div class="result-empty card-empty">没有匹配的模型。</div>`;
+    return;
+  }
+
   nodes.modelCards.replaceChildren(
     ...rows.map((run) => {
       const card = document.createElement("article");
-      card.className = `model-card run-${run.status}`;
+      card.className = "model-card";
       card.innerHTML = `
         <div class="card-topline">
           <span>${escapeHtml(providerLabel(run.providerGroup))}</span>
-          <mark class="status-pill ${escapeHtml(run.status)}">${escapeHtml(statusLabel(run))}</mark>
+          <code>${escapeHtml(axisSignature(run))}</code>
         </div>
         <p class="model-name">${escapeHtml(text(run.displayName, run.model))}</p>
-        <h3>${escapeHtml(profileLabel(run, "mbtiType"))} / ${escapeHtml(profileLabel(run, "sbtiType"))}</h3>
-        <div class="axis-stack">${renderAxisBars(run)}</div>
-        <div class="skill-box">
-          <span>${run.status === "ok" ? "干预提示词" : "运行备注"}</span>
-          <p>${escapeHtml(text(skillPromptText(run), text(run.error, "暂无输出。")))}</p>
+        <div class="profile-badges">
+          <mark class="type-pill">${escapeHtml(profileLabel(run, "mbtiType"))}</mark>
+          <mark class="type-pill muted">${escapeHtml(profileLabel(run, "sbtiType"))}</mark>
         </div>
-        <p class="source-path">${escapeHtml(text(run.sourceSummary))}</p>
+        <div class="axis-stack">${renderAxisBars(run)}</div>
       `;
       return card;
     }),
   );
+}
+
+function updateResultViews() {
+  if (!state.data) return;
+  const total = publishedRuns(state.data).length;
+  const rows = visibleRuns();
+  renderLeaderboardRows(rows, total);
+  renderCardsRows(rows);
 }
 
 function renderConclusions(data) {
@@ -300,20 +357,6 @@ function renderConclusions(data) {
   );
 }
 
-function renderMethod(data) {
-  nodes.batchLabel.textContent = text(data.batchLabel, "批量评测");
-  nodes.packVersion.textContent = `${data.pack.id} ${data.pack.version}`;
-  nodes.refinementList.replaceChildren(
-    ...data.pack.refinement.map((item) => {
-      const li = document.createElement("li");
-      li.textContent = item;
-      return li;
-    }),
-  );
-  nodes.systemPrompt.textContent = data.pack.prompt.system;
-  nodes.userPrompt.textContent = data.pack.prompt.userTemplate;
-}
-
 function renderError(error) {
   nodes.metricGrid.innerHTML = `
     <div class="metric-card error-card">
@@ -321,18 +364,19 @@ function renderError(error) {
       <strong>${escapeHtml(error.message)}</strong>
     </div>
   `;
-  nodes.resultCount.textContent = "请检查 web/data/results.json 后刷新。";
+  nodes.resultCount.textContent = "数据暂时没有加载出来。";
 }
 
 initTheme();
+initSearch();
 
 loadResults()
   .then((data) => {
+    state.data = data;
     renderMetrics(data);
     renderProviderCoverage(data);
-    renderLeaderboard(data);
-    renderCards(data);
     renderConclusions(data);
-    renderMethod(data);
+    renderFilters(data);
+    updateResultViews();
   })
   .catch(renderError);
