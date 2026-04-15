@@ -122,6 +122,8 @@ class WebResultsDataTests(unittest.TestCase):
             "每道题使用的 Prompt",
             "User template",
             "operator-run",
+            "下一步",
+            "标签数量",
         ]
         for phrase in hidden_copy:
             self.assertNotIn(phrase, public_source)
@@ -170,6 +172,9 @@ class WebResultsDataTests(unittest.TestCase):
             "renderFindingSnapshot",
             "renderFindingItems",
             "renderSearchHints",
+            "非 ${dominantMbti[0]}",
+            "来源覆盖",
+            "选项随机化后",
             "typeShareLabel",
             "typeShare",
             "axis-percent",
@@ -205,6 +210,8 @@ class WebResultsDataTests(unittest.TestCase):
             "spotlight-grid",
             "spotlight-card",
             "renderSpotlightCards",
+            "下一步",
+            "标签数量",
             "poster-hero",
             "poster-stat",
             "section-kicker",
