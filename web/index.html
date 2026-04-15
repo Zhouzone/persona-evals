@@ -1,28 +1,43 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="MBTI-style and SBTI-style probes for LLM and agent behavior."
+      content="面向 LLM 和 Agent 行为的人格评测，覆盖 MBTI-style 与 SBTI-style 探针。"
     />
-    <title>Persona Evals</title>
+    <title>Persona Evals | 模型人格评测</title>
     <link rel="stylesheet" href="./styles.css" />
+    <script>
+      (() => {
+        const key = "persona-evals-theme";
+        const stored = localStorage.getItem(key);
+        const theme = stored === "dark" || stored === "light"
+          ? stored
+          : (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme;
+      })();
+    </script>
   </head>
   <body>
-    <nav class="nav-shell" aria-label="Main navigation">
-      <a class="brand" href="#top" aria-label="Persona Evals home">
+    <nav class="nav-shell" aria-label="主导航">
+      <a class="brand" href="#top" aria-label="Persona Evals 首页">
         <span>Persona</span><span class="brand-accent">Evals</span>
       </a>
       <div class="nav-links">
-        <a href="#results">Results</a>
-        <a href="#conclusions">Findings</a>
-        <a href="#provider-coverage">Coverage</a>
-        <a href="#cards">Cards</a>
-        <a href="#method">Method</a>
-        <a href="#harness">Harness</a>
-        <a href="https://github.com/Zhouzone/persona-evals" aria-label="GitHub repository">GitHub</a>
+        <a href="#results">结果</a>
+        <a href="#conclusions">发现</a>
+        <a href="#provider-coverage">覆盖</a>
+        <a href="#cards">卡片</a>
+        <a href="#method">方法</a>
+        <a href="#harness">流程</a>
+        <a href="https://github.com/Zhouzone/persona-evals" aria-label="GitHub 仓库">GitHub</a>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换主题">
+          <span class="theme-icon" aria-hidden="true">☾</span>
+          <span id="theme-label">夜间</span>
+        </button>
       </div>
     </nav>
 
@@ -30,56 +45,55 @@
       <section class="hero-section" id="results">
         <div class="hero-inner">
           <div class="eyebrow-row">
-            <span class="eyebrow" id="batch-label">operator-run batch</span>
+            <span class="eyebrow" id="batch-label">批量评测</span>
             <span class="eyebrow muted" id="pack-version">loading</span>
           </div>
 
           <h1>
-            Persona probes for LLM and agent behavior.
+            模型人格评测：LLM 默认会长成什么样的 Agent？
           </h1>
 
           <p class="hero-copy">
-            A first pass at measuring how models choose under ambiguity,
-            pressure, failure, evidence gaps, and prompt-boundary tension.
+            我们用随机化选项的人格题库测试不同模型，在模糊、压力、失败、证据不足和边界冲突下观察它们的选择偏好。
           </p>
 
-          <div class="metric-grid" id="metric-grid" aria-label="Evaluation metrics"></div>
+          <div class="metric-grid" id="metric-grid" aria-label="评测指标"></div>
 
-          <div class="visual-strip" aria-label="Research map texture">
-            <img src="./assets/seevomap-hero.png" alt="Abstract research-map texture" />
+          <div class="visual-strip" aria-label="研究图谱纹理">
+            <img src="./assets/seevomap-hero.png" alt="研究图谱纹理" />
             <div>
-              <span>Public batch snapshot</span>
-              <strong>Only completed traces enter the public leaderboard.</strong>
+              <span>公开批次快照</span>
+              <strong>只展示完整跑完且可计分的模型结果。</strong>
             </div>
           </div>
 
-          <div class="conclusion-shell" id="conclusions" aria-label="Current findings">
+          <div class="conclusion-shell" id="conclusions" aria-label="当前发现">
             <div class="section-heading">
               <div>
-                <p class="section-kicker">Current findings</p>
-                <h2>Randomized labels change the story</h2>
+                <p class="section-kicker">当前发现</p>
+                <h2>随机化选项后，故事变得更清楚</h2>
               </div>
-              <p>Displayed choices are shuffled per item, then mapped back to scoring labels in the trace.</p>
+              <p>每道题都会打乱展示选项，再在 trace 中映射回原始计分标签。</p>
             </div>
             <ul class="conclusion-list" id="conclusion-list"></ul>
           </div>
 
-          <div class="coverage-shell" id="provider-coverage" aria-label="Provider coverage">
+          <div class="coverage-shell" id="provider-coverage" aria-label="模型覆盖">
             <div class="section-heading">
               <div>
-                <p class="section-kicker">Provider coverage</p>
-                <h2>Batch coverage by route</h2>
+                <p class="section-kicker">模型覆盖</p>
+                <h2>按厂商统计的公开结果</h2>
               </div>
-              <p>Published counts include completed traces only.</p>
+              <p>公开计数只包含完整 trace，不把失败链路混进榜单。</p>
             </div>
             <div class="provider-grid" id="provider-grid"></div>
           </div>
 
-          <div class="table-shell" aria-label="Model personality leaderboard">
+          <div class="table-shell" aria-label="模型人格榜单">
             <div class="section-heading">
               <div>
-                <p class="section-kicker">Leaderboard</p>
-                <h2>Batch results</h2>
+                <p class="section-kicker">榜单</p>
+                <h2>模型批量结果</h2>
               </div>
               <p id="result-count"></p>
             </div>
@@ -87,13 +101,13 @@
               <table>
                 <thead>
                   <tr>
-                    <th>Model</th>
-                    <th>Provider</th>
-                    <th>Status</th>
+                    <th>模型</th>
+                    <th>厂商</th>
+                    <th>状态</th>
                     <th>MBTI-style</th>
                     <th>SBTI-style</th>
-                    <th>Axis signature</th>
-                    <th>Skill</th>
+                    <th>轴签名</th>
+                    <th>建议技能</th>
                   </tr>
                 </thead>
                 <tbody id="leaderboard-body"></tbody>
@@ -107,10 +121,10 @@
         <div class="content-inner">
           <div class="section-heading">
             <div>
-              <p class="section-kicker">Shareable cards</p>
-              <h2>Model personality cards</h2>
+              <p class="section-kicker">传播卡片</p>
+              <h2>模型人格卡片</h2>
             </div>
-            <p>Each card is backed by a complete per-item trace.</p>
+            <p>每张卡片都来自完整逐题 trace，适合截图传播和后续复核。</p>
           </div>
           <div class="card-grid" id="model-cards"></div>
         </div>
@@ -119,18 +133,16 @@
       <section class="content-band alt" id="method">
         <div class="content-inner two-column">
           <div>
-            <p class="section-kicker">Method</p>
-            <h2>How the test was refined</h2>
+            <p class="section-kicker">方法</p>
+            <h2>题库如何改写</h2>
             <p class="body-copy">
-              The pack keeps the familiar public-test shape, but each item is
-              rewritten as an assistant or agent decision. The model never sees
-              MBTI or SBTI labels during the questionnaire.
+              题库保留大众熟悉的人格测试结构，但每道题都改写成 assistant 或 agent 的运行决策。答题过程中模型不会看到 MBTI 或 SBTI 标签。
             </p>
             <ul class="method-list" id="refinement-list"></ul>
           </div>
 
           <div class="prompt-panel">
-            <h3>Prompt used for every item</h3>
+            <h3>每道题使用的 Prompt</h3>
             <p class="panel-label">System</p>
             <pre id="system-prompt"></pre>
             <p class="panel-label">User template</p>
@@ -144,24 +156,24 @@
           <div class="section-heading">
             <div>
               <p class="section-kicker">Harness</p>
-              <h2>Operator-run flow</h2>
+              <h2>批量评测流程</h2>
             </div>
-            <p>Designed for our model batch runs first; public API-key entry can come later.</p>
+            <p>第一版先服务我们的批量模型评测，后续再扩展到开发者填 API key 一键运行。</p>
           </div>
 
           <div class="flow-grid">
-            <div class="flow-step"><span>01</span><strong>Test pack</strong><p>95 forced-choice items.</p></div>
-            <div class="flow-step"><span>02</span><strong>Gateway</strong><p>OpenAI-compatible Boyue route.</p></div>
-            <div class="flow-step"><span>03</span><strong>Trace</strong><p>One JSON trace per model.</p></div>
-            <div class="flow-step"><span>04</span><strong>Scorer</strong><p>Axes, SBTI profile, skill.</p></div>
-            <div class="flow-step"><span>05</span><strong>Artifact</strong><p>Static JSONL for publishing.</p></div>
+            <div class="flow-step"><span>01</span><strong>题库</strong><p>95 道强制选择题。</p></div>
+            <div class="flow-step"><span>02</span><strong>网关</strong><p>OpenAI-compatible 中转路线。</p></div>
+            <div class="flow-step"><span>03</span><strong>Trace</strong><p>每个模型保留一份 JSON 轨迹。</p></div>
+            <div class="flow-step"><span>04</span><strong>计分</strong><p>输出轴、SBTI profile 与技能建议。</p></div>
+            <div class="flow-step"><span>05</span><strong>发布</strong><p>生成静态数据文件供网站读取。</p></div>
           </div>
         </div>
       </section>
     </main>
 
     <footer>
-      <p>Persona Evals. MBTI-style and SBTI-style labels are descriptive probes, not clinical or official assessments.</p>
+      <p>Persona Evals。MBTI-style 与 SBTI-style 标签只用于描述模型行为倾向，不是官方或临床人格测评。</p>
     </footer>
 
     <script src="./app.js"></script>

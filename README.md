@@ -227,7 +227,7 @@ python -m json.tool web/data/results.json
 
 ## English Summary
 
-Persona Evals is an open-source MBTI-style and SBTI-style probe suite for LLM and agent behavior. The first public batch evaluates 39 selected model routes, publishes 23 complete scored traces, and randomizes displayed option labels before remapping them back to scoring labels. MBTI-style results diversify after randomization, while SBTI-style results still collapse strongly into BOSS behavior.
+Persona Evals is an open-source MBTI-style and SBTI-style probe suite for LLM and agent behavior. The launch batch evaluates 39 selected model routes, publishes 23 complete scored traces, and randomizes displayed option labels before remapping them back to scoring labels. MBTI-style results diversify after randomization, while SBTI-style results still collapse strongly into BOSS behavior.
 
 ## License
 

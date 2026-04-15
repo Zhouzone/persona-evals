@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-04-15T06:11:29.927128+00:00",
-  "batchLabel": "Random-label full batch 2026-04-15",
+  "batchLabel": "随机选项完整批次 2026-04-15",
   "optionLabelMode": "randomized",
   "pack": {
     "id": "ai-personality-v0.1",
@@ -21,25 +21,25 @@
       "userTemplate": "Item ID: <item_id>\n\nSituation:\n<scenario>\n\nOptions:\nA. <option>\nB. <option>\nC. <option if present>\n\nReturn only valid JSON with this shape:\n{\"choice\":\"A\",\"confidence\":0.0,\"brief_reason\":\"one sentence\"}\nThe choice must be exactly one of: A, B, or C."
     },
     "refinement": [
-      "Keep the familiar MBTI four-axis and SBTI-style shape, but rewrite every item as an AI assistant or agent operating decision.",
-      "Avoid direct type labels in prompts so the model is not asked to perform an identity.",
-      "Randomize displayed option labels per item, then map the displayed choice back to the original scoring label in the trace.",
-      "Use forced choices around concrete task behavior: clarify vs infer, evidence vs pattern, calibration vs reassurance, closure vs exploration.",
-      "Publish completed traces only; failed, stopped, or in-progress routes stay out of the public leaderboard."
+      "保留大众熟悉的 MBTI 四轴和 SBTI-style 结构，但把每道题改写成 AI assistant 或 agent 的运行决策。",
+      "Prompt 中不直接暴露人格类型标签，避免模型按身份表演。",
+      "每道题随机打乱展示选项，再在 trace 中映射回原始计分标签。",
+      "题目围绕具体任务行为做强制选择：澄清还是推断、证据还是模式、校准还是安慰、收束还是探索。",
+      "公开榜单只展示完整 trace；失败、停止或未完成路线留在 diagnostics 中。"
     ]
   },
   "conclusions": [
     {
-      "title": "MBTI remains varied after label randomization",
-      "body": "The completed random-label batch produced 4 MBTI-style labels across 23 scored models; ESTJ is common but no longer the whole story."
+      "title": "随机化后，MBTI-style 不再单一",
+      "body": "23 个完整计分模型产生了 4 种 MBTI-style 标签。ESTJ 仍然常见，但已经不是全部故事。"
     },
     {
-      "title": "SBTI still collapses to BOSS",
-      "body": "All 23 scored models landed on BOSS, which points to assistant-norm and item-semantics bias rather than a pure displayed-label artifact."
+      "title": "SBTI-style 仍然集中到 BOSS",
+      "body": "22/23 个完整计分模型落在 BOSS。这更像是 assistant 默认规范与题目语义共同造成的偏置，而不只是选项位置偏置。"
     },
     {
-      "title": "Broken routes are kept out of the leaderboard",
-      "body": "11 models returned API or parse errors and 5 were dropped after stalls. They stay in diagnostics, not in the public result table."
+      "title": "失败链路不进入公开榜单",
+      "body": "11 个模型返回 API 或解析错误，5 个模型因链路停滞被移除。它们保留在 diagnostics，不混入公开结果表。"
     }
   ],
   "summary": {
