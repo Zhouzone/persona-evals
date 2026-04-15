@@ -130,6 +130,10 @@ class WebResultsDataTests(unittest.TestCase):
             "assistant 模板",
             "assistant 规范",
             "后续可以",
+            "选项顺序",
+            "来源覆盖支撑横向比较",
+            "共同构成样本",
+            "可计分模型覆盖",
         ]
         for phrase in hidden_copy:
             self.assertNotIn(phrase, public_source)
@@ -167,6 +171,7 @@ class WebResultsDataTests(unittest.TestCase):
             "MBTI 分叉，SBTI 收敛",
             "默认助手规范",
             "不是单一人格",
+            "分叉仍然清楚",
             'class="result-console"',
             'id="search-hints"',
             'class="card-grid detail-card-grid"',
@@ -182,8 +187,7 @@ class WebResultsDataTests(unittest.TestCase):
             "renderFindingItems",
             "renderSearchHints",
             "非 ${dominantMbti[0]}",
-            "来源覆盖",
-            "选项随机化后",
+            "renderProviderCoverage",
             "typeShareLabel",
             "typeShare",
             "axis-percent",

@@ -133,7 +133,6 @@ function renderScanSummary(data) {
     ["题库规模", data.pack.totalItems],
     ["MBTI 主峰", dominantMbti],
     ["SBTI 主峰", dominantSbti],
-    ["选项顺序", "已打乱"],
   ];
 
   nodes.scanSummary.replaceChildren(
@@ -197,7 +196,7 @@ function renderPersonaMap(data) {
         )
         .join("")}
     </div>
-    <div class="map-footnote">选项已随机化，标签由同一套映射规则得到。</div>
+    <div class="map-footnote">标签由同一套映射规则得到。</div>
   `;
 }
 
@@ -445,7 +444,7 @@ function findingStats(data) {
 }
 
 function renderFindingSnapshot(data) {
-  const { runs, dominantMbti, dominantSbti, providers } = findingStats(data);
+  const { runs, dominantMbti, dominantSbti } = findingStats(data);
   const nonDominantMbtiShare = 1 - typeShare(runs, "mbtiType", dominantMbti[0]);
   nodes.findingSnapshot.innerHTML = `
     <div class="snapshot-main">
@@ -461,13 +460,13 @@ function renderFindingSnapshot(data) {
     <div class="snapshot-mini">
       <span>非 ${escapeHtml(dominantMbti[0])}</span>
       <strong>${escapeHtml(pct(nonDominantMbtiShare))}</strong>
-      <em>${providers} 类来源共同构成样本</em>
+      <em>ESFJ、ESFP、ESTP 也稳定出现</em>
     </div>
   `;
 }
 
 function buildFindingItems(data) {
-  const { runs, mbtiCounts, dominantMbti, dominantSbti, providers } = findingStats(data);
+  const { runs, mbtiCounts, dominantMbti, dominantSbti } = findingStats(data);
   const secondaryMbti = mbtiCounts
     .slice(1)
     .map(([label]) => label)
@@ -477,7 +476,7 @@ function buildFindingItems(data) {
     {
       value: `${mbtiCounts.length} 种`,
       title: "MBTI-style 不是一刀切",
-      body: `选项随机化后，${dominantMbti[0]} 仍是当前主峰，占 ${pct(dominantMbti[1] / Math.max(runs.length, 1))}；${secondaryMbti ? `同时还能看到 ${secondaryMbti}` : "但仍有其它低频标签"}。`,
+      body: `${dominantMbti[0]} 是当前主峰，占 ${pct(dominantMbti[1] / Math.max(runs.length, 1))}；${secondaryMbti ? `同时还能看到 ${secondaryMbti}` : "但仍有其它低频标签"}。`,
     },
     {
       value: pct(dominantSbti[1] / Math.max(runs.length, 1)),
@@ -488,11 +487,6 @@ function buildFindingItems(data) {
       value: pct(1 - dominantMbti[1] / Math.max(runs.length, 1)),
       title: `非 ${dominantMbti[0]} 模型并不少`,
       body: `ESFJ、ESFP、ESTP 这类结果稳定出现，说明模型默认行为不是简单复制同一种助手模板。`,
-    },
-    {
-      value: `${providers} 类`,
-      title: "来源覆盖支撑横向比较",
-      body: `${runs.length} 个可计分模型覆盖 ${providers} 类来源，这个分布不是单一厂商或单一路线的结果。`,
     },
   ];
 }
