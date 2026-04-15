@@ -1,0 +1,9 @@
+.env
+runs/
+logs/
+__pycache__/
+*.pyc
+.pytest_cache/
+combined_*.jsonl
+docs/superpowers/
+.superpowers/

@@ -1,0 +1,101 @@
+{
+  "modelListJob": "ai-personality-list-boyue-models-20260414-76122376",
+  "stoppedSupersededJobs": [
+    "aipers-broad-anthropic-04141648-61307279",
+    "aipers-broad-moonshot-04141648-94188137",
+    "aipers-broad-bytedance-04141648-94183310",
+    "aipers-broad-mistral-04141648-44845623",
+    "aipers-broad-meta-04141648-44922798",
+    "aipers-broad-openai-04141648-61438820",
+    "aipers-broad-zhipu-04141648-44934965",
+    "aipers-broad-qwen-04141648-61384331",
+    "aipers-broad-xai-04141648-44942506",
+    "aipers-broad-deepseek-04141648-94110892",
+    "aipers-broad-othercn-04141648-57155142"
+  ],
+  "activeOrCompletedJobs": {
+    "openai": "aipers-broad2-openai-04141652-9563560",
+    "anthropic": "aipers-broad2-anthropic-04141652-9548718",
+    "google": "aipers-broad2-google-04141652-11924453",
+    "qwen": "aipers-broad2-qwen-04141652-11876847",
+    "deepseek": "aipers-broad2-deepseek-04141652-47789868",
+    "bytedance": "aipers-broad2-bytedance-04141652-47791666",
+    "minimax": "aipers-broad2-minimax-04141652-47845196",
+    "moonshot": "aipers-broad2-moonshot-04141652-47844536",
+    "xai": "aipers-broad2-xai-04141652-80050519",
+    "zhipu": "aipers-broad2-zhipu-04141652-80063602",
+    "meta": "aipers-broad2-meta-04141652-80088632",
+    "mistral": "aipers-broad2-mistral-04141652-80100321",
+    "other_cn": "aipers-broad2-othercn-04141652-95618413"
+  },
+  "qwenSupplementalJobs": {
+    "stoppedBlockedJob": "aipers-broad2-qwen-04141652-11876847",
+    "failedRelativePathJobs": [
+      "aipers-qwen35-04141820-10253962",
+      "aipers-qwenmax-04141820-10149543"
+    ],
+    "activeJobs": {
+      "qwen3.5-plus": "aipers-qwen35b-04141824-86438960",
+      "qwen3-max": "aipers-qwenmaxb-04141824-86512225"
+    },
+    "reason": "The original serial qwen job produced qwen3.6-plus, then showed no log output for qwen3.5-plus for about 54 minutes. It was stopped and the remaining two models were split into one-model CPU jobs."
+  },
+  "repairRerunJobs": {
+    "repair-a-json": "aipers-repair-a-04142006-66179271",
+    "repair-b-minimax-qwen": "aipers-repair-b-04142006-66137318",
+    "repair-c-kimi-glm": "aipers-repair-c-04142006-65521176",
+    "repair-d-meta-othercn": "aipers-repair-d-04142006-66162875"
+  },
+  "repairRerunSettings": {
+    "cpuPerJob": 1,
+    "memoryMbPerJob": 4000,
+    "maxTokens": 160,
+    "timeoutSeconds": 75,
+    "maxRetries": 3,
+    "itemParseRetries": 2,
+    "progressEvery": 10
+  },
+  "biasFixPilotJobs": {
+    "gpt-5.4": "aipers-biasfix-openai-04151200-59083043",
+    "claude-sonnet-4-6": "aipers-biasfix-claude-04151200-60017807",
+    "qwen3-max": "aipers-biasfix-qwen-04151200-59808659",
+    "deepseek-v3.2": "aipers-biasfix-deepseek-04151200-59160591",
+    "mistralai/mistral-large-2512": "aipers-biasfix-mistral-04151200-59366134"
+  },
+  "biasFixPilotSettings": {
+    "purpose": "Rerun representative models after fixing displayed option labels so A/B/C bias no longer maps to fixed scoring labels.",
+    "cpuPerJob": 1,
+    "memoryMbPerJob": 3000,
+    "maxTokens": 160,
+    "timeoutSeconds": 75,
+    "maxRetries": 3,
+    "itemParseRetries": 2,
+    "progressEvery": 10,
+    "temperature": 0.2
+  },
+  "randomLabelFullJobs": {
+    "a-openai-google-deepseek-stopped-at-gemini25pro": "aipers-randfull-a3-04151241-53952478",
+    "a-rescue-deepseek": "aipers-randfull-a3deepseek-04151257-50688566",
+    "a-rescue-gemini-2.5-flash": "aipers-randfull-gemflash-04151314-61473849",
+    "b-anthropic": "aipers-randfull-b3-04151241-54040585",
+    "c-qwen-bytedance-minimax-stopped-at-qwen35": "aipers-randfull-c3-04151241-53646080",
+    "c-rescue-qwenmax-bytedance-minimax-stopped-at-doubao-pro": "aipers-randfull-c-rescue-04151320-9857449",
+    "c-rescue-doubao-minimax-stopped-at-doubao18": "aipers-randfull-c2-rescue-04151340-15083875",
+    "c-rescue-minimax": "aipers-randfull-minimax-04151358-5877919",
+    "d-moonshot-xai-zhipu": "aipers-randfull-d3-04151241-53524477",
+    "e-meta-mistral-othercn-stopped-at-baidu": "aipers-randfull-e3-04151241-54015997",
+    "e-rescue-stepfun-ling": "aipers-randfull-e-rescue-04151321-70742601"
+  },
+  "randomLabelFullSettings": {
+    "purpose": "Full selected-model rerun after displayed option labels are randomized and remapped to original scoring labels.",
+    "cpuPerJob": 1,
+    "memoryMbPerJob": 3000,
+    "maxTokens": 160,
+    "timeoutSeconds": 75,
+    "maxRetries": 3,
+    "itemParseRetries": 2,
+    "progressEvery": 10,
+    "temperature": 0.2,
+    "seed": 7
+  }
+}

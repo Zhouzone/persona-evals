@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="MBTI-like and SBTI-style probes for LLM and agent behavior."
+    />
+    <title>AI Personality Eval</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <nav class="nav-shell" aria-label="Main navigation">
+      <a class="brand" href="#top" aria-label="AI Personality Eval home">
+        <span>AI</span><span class="brand-accent">Personality</span><span>Eval</span>
+      </a>
+      <div class="nav-links">
+        <a href="#results">Results</a>
+        <a href="#conclusions">Findings</a>
+        <a href="#provider-coverage">Coverage</a>
+        <a href="#cards">Cards</a>
+        <a href="#method">Method</a>
+        <a href="#harness">Harness</a>
+        <a href="#" aria-label="GitHub repository placeholder">GitHub</a>
+      </div>
+    </nav>
+
+    <main id="top">
+      <section class="hero-section" id="results">
+        <div class="hero-inner">
+          <div class="eyebrow-row">
+            <span class="eyebrow" id="batch-label">operator-run batch</span>
+            <span class="eyebrow muted" id="pack-version">loading</span>
+          </div>
+
+          <h1>
+            MBTI-like and SBTI-style probes for LLM and agent behavior.
+          </h1>
+
+          <p class="hero-copy">
+            A first pass at measuring how models choose under ambiguity,
+            pressure, failure, evidence gaps, and prompt-boundary tension.
+          </p>
+
+          <div class="metric-grid" id="metric-grid" aria-label="Evaluation metrics"></div>
+
+          <div class="visual-strip" aria-label="Research map texture">
+            <img src="./assets/seevomap-hero.png" alt="Abstract research-map texture" />
+            <div>
+              <span>Public batch snapshot</span>
+              <strong>Only completed traces enter the public leaderboard.</strong>
+            </div>
+          </div>
+
+          <div class="conclusion-shell" id="conclusions" aria-label="Current findings">
+            <div class="section-heading">
+              <div>
+                <p class="section-kicker">Current findings</p>
+                <h2>Randomized labels change the story</h2>
+              </div>
+              <p>Displayed choices are shuffled per item, then mapped back to scoring labels in the trace.</p>
+            </div>
+            <ul class="conclusion-list" id="conclusion-list"></ul>
+          </div>
+
+          <div class="coverage-shell" id="provider-coverage" aria-label="Provider coverage">
+            <div class="section-heading">
+              <div>
+                <p class="section-kicker">Provider coverage</p>
+                <h2>Batch coverage by route</h2>
+              </div>
+              <p>Published counts include completed traces only.</p>
+            </div>
+            <div class="provider-grid" id="provider-grid"></div>
+          </div>
+
+          <div class="table-shell" aria-label="Model personality leaderboard">
+            <div class="section-heading">
+              <div>
+                <p class="section-kicker">Leaderboard</p>
+                <h2>Batch results</h2>
+              </div>
+              <p id="result-count"></p>
+            </div>
+            <div class="table-scroll">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Model</th>
+                    <th>Provider</th>
+                    <th>Status</th>
+                    <th>MBTI-like</th>
+                    <th>SBTI-style</th>
+                    <th>Axis signature</th>
+                    <th>Skill</th>
+                  </tr>
+                </thead>
+                <tbody id="leaderboard-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-band" id="cards">
+        <div class="content-inner">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker">Shareable cards</p>
+              <h2>Model personality cards</h2>
+            </div>
+            <p>Each card is backed by a complete per-item trace.</p>
+          </div>
+          <div class="card-grid" id="model-cards"></div>
+        </div>
+      </section>
+
+      <section class="content-band alt" id="method">
+        <div class="content-inner two-column">
+          <div>
+            <p class="section-kicker">Method</p>
+            <h2>How the test was refined</h2>
+            <p class="body-copy">
+              The pack keeps the familiar public-test shape, but each item is
+              rewritten as an assistant or agent decision. The model never sees
+              MBTI or SBTI labels during the questionnaire.
+            </p>
+            <ul class="method-list" id="refinement-list"></ul>
+          </div>
+
+          <div class="prompt-panel">
+            <h3>Prompt used for every item</h3>
+            <p class="panel-label">System</p>
+            <pre id="system-prompt"></pre>
+            <p class="panel-label">User template</p>
+            <pre id="user-prompt"></pre>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-band" id="harness">
+        <div class="content-inner">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker">Harness</p>
+              <h2>Operator-run flow</h2>
+            </div>
+            <p>Designed for our model batch runs first; public API-key entry can come later.</p>
+          </div>
+
+          <div class="flow-grid">
+            <div class="flow-step"><span>01</span><strong>Test pack</strong><p>95 forced-choice items.</p></div>
+            <div class="flow-step"><span>02</span><strong>Gateway</strong><p>OpenAI-compatible Boyue route.</p></div>
+            <div class="flow-step"><span>03</span><strong>Trace</strong><p>One JSON trace per model.</p></div>
+            <div class="flow-step"><span>04</span><strong>Scorer</strong><p>Axes, SBTI profile, skill.</p></div>
+            <div class="flow-step"><span>05</span><strong>Artifact</strong><p>Static JSONL for publishing.</p></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>AI Personality Eval. MBTI-like and SBTI-style labels are descriptive probes, not clinical or official assessments.</p>
+    </footer>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

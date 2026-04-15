@@ -1,0 +1,81 @@
+{
+  "source": "logs/boyue_models_20260414_164357.txt",
+  "queriedAt": "2026-04-14T16:43:57+08:00",
+  "modelCount": 541,
+  "selectionPolicy": "About three chat/text models per major provider. Exclude image, audio, video, embedding, reranker, OCR, and guard-only models.",
+  "groups": {
+    "openai": [
+      "gpt-5.4",
+      "gpt-5.4-mini",
+      "gpt-4o-mini"
+    ],
+    "anthropic": [
+      "claude-opus-4-6",
+      "claude-sonnet-4-6",
+      "claude-haiku-4-5-20251001"
+    ],
+    "google": [
+      "gemini-3.1-pro-preview",
+      "gemini-2.5-pro",
+      "gemini-2.5-flash"
+    ],
+    "qwen": [
+      "qwen3.6-plus",
+      "qwen3.5-plus",
+      "qwen3-max"
+    ],
+    "deepseek": [
+      "deepseek-v3.2",
+      "deepseek-r1",
+      "deepseek-reasoner"
+    ],
+    "bytedance": [
+      "doubao-seed-2-0-pro-260215",
+      "doubao-seed-2-0-mini-260215",
+      "doubao-seed-1-8-251228"
+    ],
+    "minimax": [
+      "MiniMax-M2.7",
+      "MiniMax-M2.7-highspeed",
+      "MiniMax-M2.5"
+    ],
+    "moonshot": [
+      "kimi-k2.5",
+      "kimi-k2-thinking-turbo",
+      "kimi-latest"
+    ],
+    "xai": [
+      "grok-4",
+      "grok-4-fast-non-reasoning",
+      "grok-4-fast-reasoning"
+    ],
+    "zhipu": [
+      "glm-5.1",
+      "glm-5",
+      "glm-4.7"
+    ],
+    "meta": [
+      "meta-llama/llama-4-maverick",
+      "meta-llama/llama-4-scout",
+      "meta-llama/llama-3.3-70b-instruct"
+    ],
+    "mistral": [
+      "mistralai/mistral-large-2512",
+      "mistralai/mistral-medium-3.1",
+      "mistralai/mistral-small-3.1-24b-instruct"
+    ],
+    "other_cn": [
+      "baidu/ERNIE-4.5-300B-A47B",
+      "stepfun-ai/Step-3.5-Flash",
+      "inclusionAI/Ling-flash-2.0"
+    ]
+  },
+  "runSettings": {
+    "cpuPerJob": 1,
+    "memoryMbPerJob": 4000,
+    "maxTokens": 160,
+    "timeoutSeconds": 60,
+    "maxRetries": 2,
+    "temperature": 0.2
+  }
+}

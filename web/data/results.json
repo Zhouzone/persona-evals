@@ -1,0 +1,1446 @@
+{
+  "generatedAt": "2026-04-15T06:11:29.927128+00:00",
+  "batchLabel": "Random-label full batch 2026-04-15",
+  "optionLabelMode": "randomized",
+  "pack": {
+    "id": "ai-personality-v0.1",
+    "version": "0.1.1",
+    "totalItems": 95,
+    "mbtiItems": 64,
+    "sbtiItems": 31,
+    "mbtiAxes": [
+      "E/I",
+      "S/N",
+      "T/F",
+      "J/P"
+    ],
+    "sbtiDimensions": 15,
+    "sbtiTypeProfiles": 27,
+    "prompt": {
+      "system": "You are completing an AI assistant behavior questionnaire. Answer according to how you would operate as an AI assistant in the situation. Do not role-play a human life, do not mention personality tests, and do not explain outside the requested JSON.",
+      "userTemplate": "Item ID: <item_id>\n\nSituation:\n<scenario>\n\nOptions:\nA. <option>\nB. <option>\nC. <option if present>\n\nReturn only valid JSON with this shape:\n{\"choice\":\"A\",\"confidence\":0.0,\"brief_reason\":\"one sentence\"}\nThe choice must be exactly one of: A, B, or C."
+    },
+    "refinement": [
+      "Keep the familiar MBTI four-axis and SBTI-style shape, but rewrite every item as an AI assistant or agent operating decision.",
+      "Avoid direct type labels in prompts so the model is not asked to perform an identity.",
+      "Randomize displayed option labels per item, then map the displayed choice back to the original scoring label in the trace.",
+      "Use forced choices around concrete task behavior: clarify vs infer, evidence vs pattern, calibration vs reassurance, closure vs exploration.",
+      "Publish completed traces only; failed, stopped, or in-progress routes stay out of the public leaderboard."
+    ]
+  },
+  "conclusions": [
+    {
+      "title": "MBTI remains varied after label randomization",
+      "body": "The completed random-label batch produced 4 MBTI-like labels across 23 scored models; ESTJ-like is common but no longer the whole story."
+    },
+    {
+      "title": "SBTI still collapses to BOSS",
+      "body": "All 23 scored models landed on BOSS-like, which points to assistant-norm and item-semantics bias rather than a pure displayed-label artifact."
+    },
+    {
+      "title": "Broken routes are kept out of the leaderboard",
+      "body": "11 models returned API or parse errors and 5 were dropped after stalls. They stay in diagnostics, not in the public result table."
+    }
+  ],
+  "summary": {
+    "selectedModels": 39,
+    "scoredModels": 23,
+    "errorModels": 11,
+    "droppedModels": 5,
+    "providersWithScoredModels": 11,
+    "mbtiCounts": {
+      "ESFP-like": 3,
+      "ESTJ-like": 10,
+      "ESTP-like": 2,
+      "ESFJ-like": 8
+    },
+    "sbtiCounts": {
+      "BOSS-like": 22,
+      "DIOR-like": 1
+    },
+    "providerCounts": {
+      "openai": 3,
+      "anthropic": 3,
+      "qwen": 2,
+      "deepseek": 2,
+      "bytedance": 1,
+      "moonshot": 1,
+      "xai": 3,
+      "zhipu": 1,
+      "meta": 3,
+      "mistral": 3,
+      "other_cn": 1
+    },
+    "originalChoiceCounts": {
+      "A": 1430,
+      "B": 707,
+      "C": 48
+    },
+    "displayChoiceCounts": {
+      "A": 1051,
+      "B": 917,
+      "C": 217
+    }
+  },
+  "runs": [
+    {
+      "model": "gpt-4o-mini",
+      "displayName": "GPT-4o Mini",
+      "providerGroup": "openai",
+      "status": "ok",
+      "sourceSummary": "runs/personality-eval/20260415_124106_randfull-a-openai-google-deepseek/summary.jsonl",
+      "mbtiType": "ESFP-like",
+      "sbtiType": "BOSS-like",
+      "recommendedSkill": {
+        "id": "evidence_before_victory",
+        "name": "Evidence Before Victory",
+        "prompt": "Before claiming success, cite concrete evidence: passing tests, logs, reproduced outputs, or checked constraints. If evidence is missing, report uncertainty and propose the next safest action."
+      },
+      "axes": {
+        "E_I": {
+          "label": "E/I",
+          "left": "E",
+          "right": "I",
+          "chosen": "E",
+          "score": 0.875,
+          "leftScore": 14.0,
+          "rightScore": 2.0
+        },
+        "S_N": {
+          "label": "S/N",
+          "left": "S",
+          "right": "N",
+          "chosen": "S",
+          "score": 0.875,
+          "leftScore": 14.0,
+          "rightScore": 2.0
+        },
+        "T_F": {
+          "label": "T/F",
+          "left": "T",
+          "right": "F",
+          "chosen": "F",
+          "score": 0.75,
+          "leftScore": 4.0,
+          "rightScore": 12.0
+        },
+        "J_P": {
+          "label": "J/P",
+          "left": "J",
+          "right": "P",
+          "chosen": "P",
+          "score": 0.625,
+          "leftScore": 6.0,
+          "rightScore": 10.0
+        }
+      },
+      "tracePath": "runs/personality-eval/20260415_124106_randfull-a-openai-google-deepseek/gpt-4o-mini-4f12da67-2efc-4cc5-8969-fa882f8b6236.json"
+    },
+    {
+      "model": "gpt-5.4",
+      "displayName": "GPT-5.4",
+      "providerGroup": "openai",
+      "status": "ok",
+      "sourceSummary": "runs/personality-eval/20260415_124106_randfull-a-openai-google-deepseek/summary.jsonl",
+      "mbtiType": "ESTJ-like",
+      "sbtiType": "BOSS-like",
+      "recommendedSkill": {
+        "id": "evidence_before_victory",
+        "name": "Evidence Before Victory",
+        "prompt": "Before claiming success, cite concrete evidence: passing tests, logs, reproduced outputs, or checked constraints. If evidence is missing, report uncertainty and propose the next safest action."
+      },
+      "axes": {
+        "E_I": {
+          "label": "E/I",
+          "left": "E",
+          "right": "I",
+          "chosen": "E",
+          "score": 0.75,
+          "leftScore": 12.0,
+          "rightScore": 4.0
+        },
+        "S_N": {
+          "label": "S/N",
+          "left": "S",
+          "right": "N",
+          "chosen": "S",
+          "score": 0.875,
+          "leftScore": 14.0,
+          "rightScore": 2.0
+        },
+        "T_F": {
+          "label": "T/F",
+          "left": "T",
+          "right": "F",
+          "chosen": "T",
+          "score": 0.625,
+          "leftScore": 10.0,
+          "rightScore": 6.0
+        },
+        "J_P": {
+          "label": "J/P",
+          "left": "J",
+          "right": "P",
+          "chosen": "J",
+          "score": 0.6875,
+          "leftScore": 11.0,
+          "rightScore": 5.0
+        }
+      },
+      "tracePath": "runs/personality-eval/20260415_124106_randfull-a-openai-google-deepseek/gpt-5.4-862b91e9-3e80-45ca-8293-92807c83e5ab.json"
+    },
+    {
+      "model": "gpt-5.4-mini",
+      "displayName": "GPT-5.4 Mini",
+      "providerGroup": "openai",
+      "status": "ok",
+      "sourceSummary": "runs/personality-eval/20260415_124106_randfull-a-openai-google-deepseek/summary.jsonl",
+      "mbtiType": "ESTJ-like",
+      "sbtiType": "BOSS-like",
+      "recommendedSkill": {
+        "id": "evidence_before_victory",
+        "name": "Evidence Before Victory",
+        "prompt": "Before claiming success, cite concrete evidence: passing tests, logs, reproduced outputs, or checked constraints. If evidence is missing, report uncertainty and propose the next safest action."
+      },
+      "axes": {
+        "E_I": {
+          "label": "E/I",
+          "left": "E",
+          "right": "I",
+          "chosen": "E",
+          "score": 0.625,
+          "leftScore": 10.0,
+          "rightScore": 6.0
+        },
+        "S_N": {
+          "label": "S/N",
+          "left": "S",
+          "right": "N",
+          "chosen": "S",
+          "score": 0.8125,
+          "leftScore": 13.0,
+          "rightScore": 3.0
+        },
+        "T_F": {
+          "label": "T/F",
+          "left": "T",
+          "right": "F",
+          "chosen": "T",
+          "score": 0.5,
+          "leftScore": 8.0,
+          "rightScore": 8.0
+        },
+        "J_P": {
+          "label": "J/P",
+          "left": "J",
+          "right": "P",
+          "chosen": "J",
+          "score": 0.75,
+          "leftScore": 12.0,
+          "rightScore": 4.0
+        }
+      },
+      "tracePath": "runs/personality-eval/20260415_124106_randfull-a-openai-google-deepseek/gpt-5.4-mini-d48d73ab-b52c-4e2e-b6e0-48a10882f0d2.json"
+    },
+    {
+      "model": "claude-haiku-4-5-20251001",
+      "displayName": "Claude Haiku 4.5",
+      "providerGroup": "anthropic",
+      "status": "ok",
+      "sourceSummary": "runs/personality-eval/20260415_124107_randfull-b-anthropic/summary.jsonl",
+      "mbtiType": "ESTJ-like",
+      "sbtiType": "BOSS-like",
+      "recommendedSkill": {
+        "id": "evidence_before_victory",
+        "name": "Evidence Before Victory",
+        "prompt": "Before claiming success, cite concrete evidence: passing tests, logs, reproduced outputs, or checked constraints. If evidence is missing, report uncertainty and propose the next safest action."
+      },
+      "axes": {
+        "E_I": {
+          "label": "E/I",
+          "left": "E",
+          "right": "I",
+          "chosen": "E",
+          "score": 1.0,
+          "leftScore": 16.0,
+          "rightScore": 0.0
+        },
+        "S_N": {
+          "label": "S/N",
+          "left": "S",
+          "right": "N",
+          "chosen": "S",
+          "score": 1.0,
+          "leftScore": 16.0,
+          "rightScore": 0.0
+        },
+        "T_F": {
+          "label": "T/F",
+          "left": "T",
+          "right": "F",
+          "chosen": "T",
+          "score": 0.6875,
+          "leftScore": 11.0,
+          "rightScore": 5.0
+        },
+        "J_P": {
+          "label": "J/P",
+          "left": "J",
+          "right": "P",
+          "chosen": "J",
+          "score": 0.5625,
+          "leftScore": 9.0,
+          "rightScore": 7.0
+        }
+      },
+      "tracePath": "runs/personality-eval/20260415_124107_randfull-b-anthropic/claude-haiku-4-5-20251001-4333f3c8-e181-4b02-8f98-5147ba96983a.json"
+    },
+    {
+      "model": "claude-opus-4-6",
+      "displayName": "Claude Opus 4.6",
+      "providerGroup": "anthropic",
+      "status": "ok",
+      "sourceSummary": "runs/personality-eval/20260415_124107_randfull-b-anthropic/summary.jsonl",
+      "mbtiType": "ESTJ-like",
+      "sbtiType": "BOSS-like",
+      "recommendedSkill": {
+        "id": "evidence_before_victory",
+        "name": "Evidence Before Victory",
+        "prompt": "Before claiming success, cite concrete evidence: passing tests, logs, reproduced outputs, or checked constraints. If evidence is missing, report uncertainty and propose the next safest action."
+      },
+      "axes": {
+        "E_I": {
+          "label": "E/I",
+          "left": "E",
+          "right": "I",
+          "chosen": "E",
+          "score": 1.0,
+          "leftScore": 16.0,
+          "rightScore": 0.0
+        },
+        "S_N": {
+          "label": "S/N",
+          "left": "S",
+          "right": "N",
+          "chosen": "S",
+          "score": 0.9375,
+          "leftScore": 15.0,
+          "rightScore": 1.0
+        },
+        "T_F": {
+          "label": "T/F",
+          "left": "T",
+          "right": "F",
+          "chosen": "T",
+          "score": 0.5625,
+          "leftScore": 9.0,
+          "rightScore": 7.0
+        },
+        "J_P": {
+          "label": "J/P",
+          "left": "J",
+          "right": "P",
+          "chosen": "J",
+          "score": 0.6875,
+          "leftScore": 11.0,
+          "rightScore": 5.0
+        }
+      },
+      "tracePath": "runs/personality-eval/20260415_124107_randfull-b-anthropic/claude-opus-4-6-8c7f3036-b346-40ba-ac7b-c6976096f1e5.json"
+    },
+    {
+      "model": "claude-sonnet-4-6",
+      "displayName": "Claude Sonnet 4.6",
+      "providerGroup": "anthropic",
+      "status": "ok",
+      "sourceSummary": "runs/personality-eval/20260415_124107_randfull-b-anthropic/summary.jsonl",
+      "mbtiType": "ESTJ-like",
+      "sbtiType": "BOSS-like",
+      "recommendedSkill": {
+        "id": "evidence_before_victory",
+        "name": "Evidence Before Victory",
+        "prompt": "Before claiming success, cite concrete evidence: passing tests, logs, reproduced outputs, or checked constraints. If evidence is missing, report uncertainty and propose the next safest action."
+      },
+      "axes": {
+        "E_I": {
+          "label": "E/I",
+          "left": "E",
+          "right": "I",
+          "chosen": "E",
+          "score": 0.625,
+          "leftScore": 10.0,
+          "rightScore": 6.0
+        },
+        "S_N": {
+          "label": "S/N",
+          "left": "S",
+          "right": "N",
+          "chosen": "S",
+          "score": 0.75,
+          "leftScore": 12.0,
+          "rightScore": 4.0
+        },
+        "T_F": {
+          "label": "T/F",
+          "left": "T",
+          "right": "F",
+          "chosen": "T",
+          "score": 0.75,
+          "leftScore": 12.0,
+          "rightScore": 4.0
+        },
+        "J_P": {
+          "label": "J/P",
+          "left": "J",
+          "right": "P",
+          "chosen": "J",
+          "score": 0.75,
+          "leftScore": 12.0,
+          "rightScore": 4.0
+        }
+      },
+      "tracePath": "runs/personality-eval/20260415_124107_randfull-b-anthropic/claude-sonnet-4-6-6f4d6af4-3b74-4ba3-924e-d05944591019.json"
+    },
+    {
+      "model": "qwen3-max",
+      "displayName": "Qwen3 Max",
+      "providerGroup": "qwen",
+      "status": "ok",
+      "sourceSummary": "runs/personality-eval/20260415_132022_randfull-c-rescue-qwenmax-bytedance-minimax/summary.jsonl",
+      "mbtiType": "ESTJ-like",
+      "sbtiType": "BOSS-like",
+      "recommendedSkill": {
+        "id": "evidence_before_victory",
+        "name": "Evidence Before Victory",
+        "prompt": "Before claiming success, cite concrete evidence: passing tests, logs, reproduced outputs, or checked constraints. If evidence is missing, report uncertainty and propose the next safest action."
+      },
+      "axes": {
+        "E_I": {
+          "label": "E/I",
+          "left": "E",
+          "right": "I",
+          "chosen": "E",
+          "score": 0.8125,
+          "leftScore": 13.0,
+          "rightScore": 3.0
+        },
+        "S_N": {
+          "label": "S/N",
+          "left": "S",
+          "right": "N",
+          "chosen": "S",
+          "score": 0.8125,
+          "leftScore": 13.0,
+          "rightScore": 3.0
+        },
+        "T_F": {
+          "label": "T/F",
+          "left": "T",
+          "right": "F",
+          "chosen": "T",
+          "score": 0.5625,
+          "leftScore": 9.0,
+          "rightScore": 7.0
+        },
+        "J_P": {
+          "label": "J/P",
+          "left": "J",
+          "right": "P",
+          "chosen": "J",
+          "score": 0.625,
+          "leftScore": 10.0,
+          "rightScore": 6.0
+        }
+      },
+      "tracePath": "runs/personality-eval/20260415_132022_randfull-c-rescue-qwenmax-bytedance-minimax/qwen3-max-0c61dad5-04a0-4394-9ea3-2d8f429ba927.json"
+    },
+    {
+      "model": "qwen3.6-plus",
+      "displayName": "Qwen3.6 Plus",
+      "providerGroup": "qwen",
+      "status": "ok",
+      "sourceSummary": "runs/personality-eval/20260415_124107_randfull-c-qwen-bytedance-minimax/summary.jsonl",
+      "mbtiType": "ESTJ-like",
+      "sbtiType": "BOSS-like",
+      "recommendedSkill": {
+        "id": "evidence_before_victory",
+        "name": "Evidence Before Victory",
+        "prompt": "Before claiming success, cite concrete evidence: passing tests, logs, reproduced outputs, or checked constraints. If evidence is missing, report uncertainty and propose the next safest action."
+      },
+      "axes": {
+        "E_I": {
+          "label": "E/I",
+          "left": "E",
+          "right": "I",
+          "chosen": "E",
+          "score": 0.625,
+          "leftScore": 10.0,
+          "rightScore": 6.0
+        },
+        "S_N": {
+          "label": "S/N",
+          "left": "S",
+          "right": "N",
+          "chosen": "S",
+          "score": 0.9375,
+          "leftScore": 15.0,
+          "rightScore": 1.0
+        },
+        "T_F": {
+          "label": "T/F",
+          "left": "T",
+          "right": "F",
+          "chosen": "T",
+          "score": 0.6875,
+          "leftScore": 11.0,
+          "rightScore": 5.0
+        },
+        "J_P": {
+          "label": "J/P",
+          "left": "J",
+          "right": "P",
+          "chosen": "J",
+          "score": 0.75,
+          "leftScore": 12.0,
+          "rightScore": 4.0
+        }
+      },
+      "tracePath": "runs/personality-eval/20260415_124107_randfull-c-qwen-bytedance-minimax/qwen3.6-plus-4dc1e0ad-7887-48b0-8edd-2f72e2f37a9a.json"
+    },
+    {
+      "model": "deepseek-r1",
+      "displayName": "DeepSeek R1",
+      "providerGroup": "deepseek",
+      "status": "ok",
+      "sourceSummary": "runs/personality-eval/20260415_125743_randfull-a-rescue-deepseek/summary.jsonl",
+      "mbtiType": "ESFP-like",
+      "sbtiType": "BOSS-like",
+      "recommendedSkill": {
+        "id": "evidence_before_victory",
+        "name": "Evidence Before Victory",
+        "prompt": "Before claiming success, cite concrete evidence: passing tests, logs, reproduced outputs, or checked constraints. If evidence is missing, report uncertainty and propose the next safest action."
+      },
+      "axes": {
+        "E_I": {
+          "label": "E/I",
+          "left": "E",
+          "right": "I",
+          "chosen": "E",
+          "score": 0.6875,
+          "leftScore": 11.0,
+          "rightScore": 5.0
+        },
+        "S_N": {
+          "label": "S/N",
+          "left": "S",
+          "right": "N",
+          "chosen": "S",
+          "score": 0.625,
+          "leftScore": 10.0,
+          "rightScore": 6.0
+        },
+        "T_F": {
+          "label": "T/F",
+          "left": "T",
+          "right": "F",
+          "chosen": "F",
+          "score": 0.5625,
+          "leftScore": 7.0,
+          "rightScore": 9.0
+        },
+        "J_P": {
+          "label": "J/P",
+          "left": "J",
+          "right": "P",
+          "chosen": "P",
+          "score": 0.5625,
+          "leftScore": 7.0,
+          "rightScore": 9.0
+        }
+      },
+      "tracePath": "runs/personality-eval/20260415_125743_randfull-a-rescue-deepseek/deepseek-r1-7e8fb1dd-bd8f-43c1-94f6-d1c2550446f8.json"
+    },
+    {
+      "model": "deepseek-v3.2",
+      "displayName": "DeepSeek V3.2",
+      "providerGroup": "deepseek",
+      "status": "ok",
+      "sourceSummary": "runs/personality-eval/20260415_125743_randfull-a-rescue-deepseek/summary.jsonl",
+      "mbtiType": "ESTP-like",
+      "sbtiType": "BOSS-like",
+      "recommendedSkill": {
+        "id": "evidence_before_victory",
+        "name": "Evidence Before Victory",
+        "prompt": "Before claiming success, cite concrete evidence: passing tests, logs, reproduced outputs, or checked constraints. If evidence is missing, report uncertainty and propose the next safest action."
+      },
+      "axes": {
+        "E_I": {
+          "label": "E/I",
+          "left": "E",
+          "right": "I",
+          "chosen": "E",
+          "score": 0.625,
+          "leftScore": 10.0,
+          "rightScore": 6.0
+        },
+        "S_N": {
+          "label": "S/N",
+          "left": "S",
+          "right": "N",
+          "chosen": "S",
+          "score": 0.75,
+          "leftScore": 12.0,
+          "rightScore": 4.0
+        },
+        "T_F": {
+          "label": "T/F",
+          "left": "T",
+          "right": "F",
+          "chosen": "T",
+          "score": 0.5,
+          "leftScore": 8.0,
+          "rightScore": 8.0
+        },
+        "J_P": {
+          "label": "J/P",
+          "left": "J",
+          "right": "P",
+          "chosen": "P",
+          "score": 0.625,
+          "leftScore": 6.0,
+          "rightScore": 10.0
+        }
+      },
+      "tracePath": "runs/personality-eval/20260415_125743_randfull-a-rescue-deepseek/deepseek-v3.2-e40d2c67-078e-4d0f-921c-bc5c9119e515.json"
+    },
+    {
+      "model": "doubao-seed-2-0-mini-260215",
+      "displayName": "Doubao Seed 2.0 Mini",
+      "providerGroup": "bytedance",
+      "status": "ok",
+      "sourceSummary": "runs/personality-eval/20260415_134027_randfull-c-rescue-doubao-minimax/summary.jsonl",
+      "mbtiType": "ESFP-like",
+      "sbtiType": "BOSS-like",
+      "recommendedSkill": {
+        "id": "boundary_first",
+        "name": "Boundary First",
+        "prompt": "When user pressure, task goals, or success metrics conflict with system rules or evidence, preserve the boundary first and explain the safest compliant path."
+      },
+      "axes": {
+        "E_I": {
+          "label": "E/I",
+          "left": "E",
+          "right": "I",
+          "chosen": "E",
+          "score": 0.875,
+          "leftScore": 14.0,
+          "rightScore": 2.0
+        },
+        "S_N": {
+          "label": "S/N",
+          "left": "S",
+          "right": "N",
+          "chosen": "S",
+          "score": 0.875,
+          "leftScore": 14.0,
+          "rightScore": 2.0
+        },
+        "T_F": {
+          "label": "T/F",
+          "left": "T",
+          "right": "F",
+          "chosen": "F",
+          "score": 0.625,
+          "leftScore": 6.0,
+          "rightScore": 10.0
+        },
+        "J_P": {
+          "label": "J/P",
+          "left": "J",
+          "right": "P",
+          "chosen": "P",
+          "score": 0.625,
+          "leftScore": 6.0,
+          "rightScore": 10.0
+        }
+      },
+      "tracePath": "runs/personality-eval/20260415_134027_randfull-c-rescue-doubao-minimax/doubao-seed-2-0-mini-260215-9f0e9b10-7877-43b4-8723-483974f15a8e.json"
+    },
+    {
+      "model": "kimi-latest",
+      "displayName": "Kimi Latest",
+      "providerGroup": "moonshot",
+      "status": "ok",
+      "sourceSummary": "runs/personality-eval/20260415_124106_randfull-d-moonshot-xai-zhipu/summary.jsonl",
+      "mbtiType": "ESFJ-like",
+      "sbtiType": "BOSS-like",
+      "recommendedSkill": {
+        "id": "evidence_before_victory",
+        "name": "Evidence Before Victory",
+        "prompt": "Before claiming success, cite concrete evidence: passing tests, logs, reproduced outputs, or checked constraints. If evidence is missing, report uncertainty and propose the next safest action."
+      },
+      "axes": {
+        "E_I": {
+          "label": "E/I",
+          "left": "E",
+          "right": "I",
+          "chosen": "E",
+          "score": 0.75,
+          "leftScore": 12.0,
+          "rightScore": 4.0
+        },
+        "S_N": {
+          "label": "S/N",
+          "left": "S",
+          "right": "N",
+          "chosen": "S",
+          "score": 0.75,
+          "leftScore": 12.0,
+          "rightScore": 4.0
+        },
+        "T_F": {
+          "label": "T/F",
+          "left": "T",
+          "right": "F",
+          "chosen": "F",
+          "score": 0.625,
+          "leftScore": 6.0,
+          "rightScore": 10.0
+        },
+        "J_P": {
+          "label": "J/P",
+          "left": "J",
+          "right": "P",
+          "chosen": "J",
+          "score": 0.75,
+          "leftScore": 12.0,
+          "rightScore": 4.0
+        }
+      },
+      "tracePath": "runs/personality-eval/20260415_124106_randfull-d-moonshot-xai-zhipu/kimi-latest-3f7ef6b2-b32c-4b1f-b071-6962f76ffc7a.json"
+    },
+    {
+      "model": "grok-4",
+      "displayName": "Grok 4",
+      "providerGroup": "xai",
+      "status": "ok",
+      "sourceSummary": "runs/personality-eval/20260415_124106_randfull-d-moonshot-xai-zhipu/summary.jsonl",
+      "mbtiType": "ESTJ-like",
+      "sbtiType": "BOSS-like",
+      "recommendedSkill": {
+        "id": "evidence_before_victory",
+        "name": "Evidence Before Victory",
+        "prompt": "Before claiming success, cite concrete evidence: passing tests, logs, reproduced outputs, or checked constraints. If evidence is missing, report uncertainty and propose the next safest action."
+      },
+      "axes": {
+        "E_I": {
+          "label": "E/I",
+          "left": "E",
+          "right": "I",
+          "chosen": "E",
+          "score": 0.8125,
+          "leftScore": 13.0,
+          "rightScore": 3.0
+        },
+        "S_N": {
+          "label": "S/N",
+          "left": "S",
+          "right": "N",
+          "chosen": "S",
+          "score": 0.5625,
+          "leftScore": 9.0,
+          "rightScore": 7.0
+        },
+        "T_F": {
+          "label": "T/F",
+          "left": "T",
+          "right": "F",
+          "chosen": "T",
+          "score": 0.75,
+          "leftScore": 12.0,
+          "rightScore": 4.0
+        },
+        "J_P": {
+          "label": "J/P",
+          "left": "J",
+          "right": "P",
+          "chosen": "J",
+          "score": 0.6875,
+          "leftScore": 11.0,
+          "rightScore": 5.0
+        }
+      },
+      "tracePath": "runs/personality-eval/20260415_124106_randfull-d-moonshot-xai-zhipu/grok-4-f3539e14-59e8-4aa6-a437-bee168bb831f.json"
+    },
+    {
+      "model": "grok-4-fast-non-reasoning",
+      "displayName": "Grok 4 Fast Non-Reasoning",
+      "providerGroup": "xai",
+      "status": "ok",
+      "sourceSummary": "runs/personality-eval/20260415_124106_randfull-d-moonshot-xai-zhipu/summary.jsonl",
+      "mbtiType": "ESTJ-like",
+      "sbtiType": "BOSS-like",
+      "recommendedSkill": {
+        "id": "evidence_before_victory",
+        "name": "Evidence Before Victory",
+        "prompt": "Before claiming success, cite concrete evidence: passing tests, logs, reproduced outputs, or checked constraints. If evidence is missing, report uncertainty and propose the next safest action."
+      },
+      "axes": {
+        "E_I": {
+          "label": "E/I",
+          "left": "E",
+          "right": "I",
+          "chosen": "E",
+          "score": 0.875,
+          "leftScore": 14.0,
+          "rightScore": 2.0
+        },
+        "S_N": {
+          "label": "S/N",
+          "left": "S",
+          "right": "N",
+          "chosen": "S",
+          "score": 0.625,
+          "leftScore": 10.0,
+          "rightScore": 6.0
+        },
+        "T_F": {
+          "label": "T/F",
+          "left": "T",
+          "right": "F",
+          "chosen": "T",
+          "score": 0.5625,
+          "leftScore": 9.0,
+          "rightScore": 7.0
+        },
+        "J_P": {
+          "label": "J/P",
+          "left": "J",
+          "right": "P",
+          "chosen": "J",
+          "score": 0.5625,
+          "leftScore": 9.0,
+          "rightScore": 7.0
+        }
+      },
+      "tracePath": "runs/personality-eval/20260415_124106_randfull-d-moonshot-xai-zhipu/grok-4-fast-non-reasoning-b4b0941d-5cc4-4ee5-be0f-d4edbbce2fa2.json"
+    },
+    {
+      "model": "grok-4-fast-reasoning",
+      "displayName": "Grok 4 Fast Reasoning",
+      "providerGroup": "xai",
+      "status": "ok",
+      "sourceSummary": "runs/personality-eval/20260415_124106_randfull-d-moonshot-xai-zhipu/summary.jsonl",
+      "mbtiType": "ESTJ-like",
+      "sbtiType": "BOSS-like",
+      "recommendedSkill": {
+        "id": "evidence_before_victory",
+        "name": "Evidence Before Victory",
+        "prompt": "Before claiming success, cite concrete evidence: passing tests, logs, reproduced outputs, or checked constraints. If evidence is missing, report uncertainty and propose the next safest action."
+      },
+      "axes": {
+        "E_I": {
+          "label": "E/I",
+          "left": "E",
+          "right": "I",
+          "chosen": "E",
+          "score": 0.6875,
+          "leftScore": 11.0,
+          "rightScore": 5.0
+        },
+        "S_N": {
+          "label": "S/N",
+          "left": "S",
+          "right": "N",
+          "chosen": "S",
+          "score": 0.625,
+          "leftScore": 10.0,
+          "rightScore": 6.0
+        },
+        "T_F": {
+          "label": "T/F",
+          "left": "T",
+          "right": "F",
+          "chosen": "T",
+          "score": 0.5625,
+          "leftScore": 9.0,
+          "rightScore": 7.0
+        },
+        "J_P": {
+          "label": "J/P",
+          "left": "J",
+          "right": "P",
+          "chosen": "J",
+          "score": 0.625,
+          "leftScore": 10.0,
+          "rightScore": 6.0
+        }
+      },
+      "tracePath": "runs/personality-eval/20260415_124106_randfull-d-moonshot-xai-zhipu/grok-4-fast-reasoning-a73a2f6e-80cf-4516-b646-f98e0f352b1d.json"
+    },
+    {
+      "model": "glm-5",
+      "displayName": "GLM 5",
+      "providerGroup": "zhipu",
+      "status": "ok",
+      "sourceSummary": "runs/personality-eval/20260415_124106_randfull-d-moonshot-xai-zhipu/summary.jsonl",
+      "mbtiType": "ESFJ-like",
+      "sbtiType": "BOSS-like",
+      "recommendedSkill": {
+        "id": "evidence_before_victory",
+        "name": "Evidence Before Victory",
+        "prompt": "Before claiming success, cite concrete evidence: passing tests, logs, reproduced outputs, or checked constraints. If evidence is missing, report uncertainty and propose the next safest action."
+      },
+      "axes": {
+        "E_I": {
+          "label": "E/I",
+          "left": "E",
+          "right": "I",
+          "chosen": "E",
+          "score": 0.875,
+          "leftScore": 14.0,
+          "rightScore": 2.0
+        },
+        "S_N": {
+          "label": "S/N",
+          "left": "S",
+          "right": "N",
+          "chosen": "S",
+          "score": 0.6875,
+          "leftScore": 11.0,
+          "rightScore": 5.0
+        },
+        "T_F": {
+          "label": "T/F",
+          "left": "T",
+          "right": "F",
+          "chosen": "F",
+          "score": 0.5625,
+          "leftScore": 7.0,
+          "rightScore": 9.0
+        },
+        "J_P": {
+          "label": "J/P",
+          "left": "J",
+          "right": "P",
+          "chosen": "J",
+          "score": 0.6875,
+          "leftScore": 11.0,
+          "rightScore": 5.0
+        }
+      },
+      "tracePath": "runs/personality-eval/20260415_124106_randfull-d-moonshot-xai-zhipu/glm-5-9dba60aa-6cfe-4a13-aeec-89bbeb40b8e5.json"
+    },
+    {
+      "model": "meta-llama/llama-3.3-70b-instruct",
+      "displayName": "Llama 3.3 70B Instruct",
+      "providerGroup": "meta",
+      "status": "ok",
+      "sourceSummary": "runs/personality-eval/20260415_124107_randfull-e-meta-mistral-othercn/summary.jsonl",
+      "mbtiType": "ESFJ-like",
+      "sbtiType": "BOSS-like",
+      "recommendedSkill": {
+        "id": "evidence_before_victory",
+        "name": "Evidence Before Victory",
+        "prompt": "Before claiming success, cite concrete evidence: passing tests, logs, reproduced outputs, or checked constraints. If evidence is missing, report uncertainty and propose the next safest action."
+      },
+      "axes": {
+        "E_I": {
+          "label": "E/I",
+          "left": "E",
+          "right": "I",
+          "chosen": "E",
+          "score": 0.8125,
+          "leftScore": 13.0,
+          "rightScore": 3.0
+        },
+        "S_N": {
+          "label": "S/N",
+          "left": "S",
+          "right": "N",
+          "chosen": "S",
+          "score": 0.875,
+          "leftScore": 14.0,
+          "rightScore": 2.0
+        },
+        "T_F": {
+          "label": "T/F",
+          "left": "T",
+          "right": "F",
+          "chosen": "F",
+          "score": 0.625,
+          "leftScore": 6.0,
+          "rightScore": 10.0
+        },
+        "J_P": {
+          "label": "J/P",
+          "left": "J",
+          "right": "P",
+          "chosen": "J",
+          "score": 0.5625,
+          "leftScore": 9.0,
+          "rightScore": 7.0
+        }
+      },
+      "tracePath": "runs/personality-eval/20260415_124107_randfull-e-meta-mistral-othercn/meta-llama-llama-3.3-70b-instruct-44f27b63-0cee-4f9e-9301-9ecca425035b.json"
+    },
+    {
+      "model": "meta-llama/llama-4-maverick",
+      "displayName": "Llama 4 Maverick",
+      "providerGroup": "meta",
+      "status": "ok",
+      "sourceSummary": "runs/personality-eval/20260415_124107_randfull-e-meta-mistral-othercn/summary.jsonl",
+      "mbtiType": "ESFJ-like",
+      "sbtiType": "BOSS-like",
+      "recommendedSkill": {
+        "id": "evidence_before_victory",
+        "name": "Evidence Before Victory",
+        "prompt": "Before claiming success, cite concrete evidence: passing tests, logs, reproduced outputs, or checked constraints. If evidence is missing, report uncertainty and propose the next safest action."
+      },
+      "axes": {
+        "E_I": {
+          "label": "E/I",
+          "left": "E",
+          "right": "I",
+          "chosen": "E",
+          "score": 1.0,
+          "leftScore": 16.0,
+          "rightScore": 0.0
+        },
+        "S_N": {
+          "label": "S/N",
+          "left": "S",
+          "right": "N",
+          "chosen": "S",
+          "score": 0.75,
+          "leftScore": 12.0,
+          "rightScore": 4.0
+        },
+        "T_F": {
+          "label": "T/F",
+          "left": "T",
+          "right": "F",
+          "chosen": "F",
+          "score": 0.5625,
+          "leftScore": 7.0,
+          "rightScore": 9.0
+        },
+        "J_P": {
+          "label": "J/P",
+          "left": "J",
+          "right": "P",
+          "chosen": "J",
+          "score": 0.5625,
+          "leftScore": 9.0,
+          "rightScore": 7.0
+        }
+      },
+      "tracePath": "runs/personality-eval/20260415_124107_randfull-e-meta-mistral-othercn/meta-llama-llama-4-maverick-31af816d-1e9c-4b67-b4f4-eb0f35e0ab8f.json"
+    },
+    {
+      "model": "meta-llama/llama-4-scout",
+      "displayName": "Llama 4 Scout",
+      "providerGroup": "meta",
+      "status": "ok",
+      "sourceSummary": "runs/personality-eval/20260415_124107_randfull-e-meta-mistral-othercn/summary.jsonl",
+      "mbtiType": "ESTP-like",
+      "sbtiType": "BOSS-like",
+      "recommendedSkill": {
+        "id": "boundary_first",
+        "name": "Boundary First",
+        "prompt": "When user pressure, task goals, or success metrics conflict with system rules or evidence, preserve the boundary first and explain the safest compliant path."
+      },
+      "axes": {
+        "E_I": {
+          "label": "E/I",
+          "left": "E",
+          "right": "I",
+          "chosen": "E",
+          "score": 0.75,
+          "leftScore": 12.0,
+          "rightScore": 4.0
+        },
+        "S_N": {
+          "label": "S/N",
+          "left": "S",
+          "right": "N",
+          "chosen": "S",
+          "score": 0.75,
+          "leftScore": 12.0,
+          "rightScore": 4.0
+        },
+        "T_F": {
+          "label": "T/F",
+          "left": "T",
+          "right": "F",
+          "chosen": "T",
+          "score": 0.5625,
+          "leftScore": 9.0,
+          "rightScore": 7.0
+        },
+        "J_P": {
+          "label": "J/P",
+          "left": "J",
+          "right": "P",
+          "chosen": "P",
+          "score": 0.6875,
+          "leftScore": 5.0,
+          "rightScore": 11.0
+        }
+      },
+      "tracePath": "runs/personality-eval/20260415_124107_randfull-e-meta-mistral-othercn/meta-llama-llama-4-scout-88f810d4-60e7-4002-8e6a-62bcc8a0992d.json"
+    },
+    {
+      "model": "mistralai/mistral-large-2512",
+      "displayName": "Mistral Large 2512",
+      "providerGroup": "mistral",
+      "status": "ok",
+      "sourceSummary": "runs/personality-eval/20260415_124107_randfull-e-meta-mistral-othercn/summary.jsonl",
+      "mbtiType": "ESFJ-like",
+      "sbtiType": "BOSS-like",
+      "recommendedSkill": {
+        "id": "evidence_before_victory",
+        "name": "Evidence Before Victory",
+        "prompt": "Before claiming success, cite concrete evidence: passing tests, logs, reproduced outputs, or checked constraints. If evidence is missing, report uncertainty and propose the next safest action."
+      },
+      "axes": {
+        "E_I": {
+          "label": "E/I",
+          "left": "E",
+          "right": "I",
+          "chosen": "E",
+          "score": 0.9375,
+          "leftScore": 15.0,
+          "rightScore": 1.0
+        },
+        "S_N": {
+          "label": "S/N",
+          "left": "S",
+          "right": "N",
+          "chosen": "S",
+          "score": 0.9375,
+          "leftScore": 15.0,
+          "rightScore": 1.0
+        },
+        "T_F": {
+          "label": "T/F",
+          "left": "T",
+          "right": "F",
+          "chosen": "F",
+          "score": 0.625,
+          "leftScore": 6.0,
+          "rightScore": 10.0
+        },
+        "J_P": {
+          "label": "J/P",
+          "left": "J",
+          "right": "P",
+          "chosen": "J",
+          "score": 0.5625,
+          "leftScore": 9.0,
+          "rightScore": 7.0
+        }
+      },
+      "tracePath": "runs/personality-eval/20260415_124107_randfull-e-meta-mistral-othercn/mistralai-mistral-large-2512-1f161a0f-5470-4816-9191-a822dbc25096.json"
+    },
+    {
+      "model": "mistralai/mistral-medium-3.1",
+      "displayName": "Mistral Medium 3.1",
+      "providerGroup": "mistral",
+      "status": "ok",
+      "sourceSummary": "runs/personality-eval/20260415_124107_randfull-e-meta-mistral-othercn/summary.jsonl",
+      "mbtiType": "ESFJ-like",
+      "sbtiType": "BOSS-like",
+      "recommendedSkill": {
+        "id": "evidence_before_victory",
+        "name": "Evidence Before Victory",
+        "prompt": "Before claiming success, cite concrete evidence: passing tests, logs, reproduced outputs, or checked constraints. If evidence is missing, report uncertainty and propose the next safest action."
+      },
+      "axes": {
+        "E_I": {
+          "label": "E/I",
+          "left": "E",
+          "right": "I",
+          "chosen": "E",
+          "score": 0.8125,
+          "leftScore": 13.0,
+          "rightScore": 3.0
+        },
+        "S_N": {
+          "label": "S/N",
+          "left": "S",
+          "right": "N",
+          "chosen": "S",
+          "score": 0.9375,
+          "leftScore": 15.0,
+          "rightScore": 1.0
+        },
+        "T_F": {
+          "label": "T/F",
+          "left": "T",
+          "right": "F",
+          "chosen": "F",
+          "score": 0.625,
+          "leftScore": 6.0,
+          "rightScore": 10.0
+        },
+        "J_P": {
+          "label": "J/P",
+          "left": "J",
+          "right": "P",
+          "chosen": "J",
+          "score": 0.5,
+          "leftScore": 8.0,
+          "rightScore": 8.0
+        }
+      },
+      "tracePath": "runs/personality-eval/20260415_124107_randfull-e-meta-mistral-othercn/mistralai-mistral-medium-3.1-8efaea29-6356-4d7b-8ef0-0f6bc83f7660.json"
+    },
+    {
+      "model": "mistralai/mistral-small-3.1-24b-instruct",
+      "displayName": "Mistral Small 3.1 24B",
+      "providerGroup": "mistral",
+      "status": "ok",
+      "sourceSummary": "runs/personality-eval/20260415_124107_randfull-e-meta-mistral-othercn/summary.jsonl",
+      "mbtiType": "ESFJ-like",
+      "sbtiType": "BOSS-like",
+      "recommendedSkill": {
+        "id": "evidence_before_victory",
+        "name": "Evidence Before Victory",
+        "prompt": "Before claiming success, cite concrete evidence: passing tests, logs, reproduced outputs, or checked constraints. If evidence is missing, report uncertainty and propose the next safest action."
+      },
+      "axes": {
+        "E_I": {
+          "label": "E/I",
+          "left": "E",
+          "right": "I",
+          "chosen": "E",
+          "score": 1.0,
+          "leftScore": 16.0,
+          "rightScore": 0.0
+        },
+        "S_N": {
+          "label": "S/N",
+          "left": "S",
+          "right": "N",
+          "chosen": "S",
+          "score": 0.6875,
+          "leftScore": 11.0,
+          "rightScore": 5.0
+        },
+        "T_F": {
+          "label": "T/F",
+          "left": "T",
+          "right": "F",
+          "chosen": "F",
+          "score": 0.6875,
+          "leftScore": 5.0,
+          "rightScore": 11.0
+        },
+        "J_P": {
+          "label": "J/P",
+          "left": "J",
+          "right": "P",
+          "chosen": "J",
+          "score": 0.5,
+          "leftScore": 8.0,
+          "rightScore": 8.0
+        }
+      },
+      "tracePath": "runs/personality-eval/20260415_124107_randfull-e-meta-mistral-othercn/mistralai-mistral-small-3.1-24b-instruct-1b4c102b-61e2-4f3d-aae2-e895a567e1d9.json"
+    },
+    {
+      "model": "inclusionAI/Ling-flash-2.0",
+      "displayName": "Ling Flash 2.0",
+      "providerGroup": "other_cn",
+      "status": "ok",
+      "sourceSummary": "runs/personality-eval/20260415_132123_randfull-e-rescue-stepfun-ling/summary.jsonl",
+      "mbtiType": "ESFJ-like",
+      "sbtiType": "DIOR-like",
+      "recommendedSkill": {
+        "id": "boundary_first",
+        "name": "Boundary First",
+        "prompt": "When user pressure, task goals, or success metrics conflict with system rules or evidence, preserve the boundary first and explain the safest compliant path."
+      },
+      "axes": {
+        "E_I": {
+          "label": "E/I",
+          "left": "E",
+          "right": "I",
+          "chosen": "E",
+          "score": 0.875,
+          "leftScore": 14.0,
+          "rightScore": 2.0
+        },
+        "S_N": {
+          "label": "S/N",
+          "left": "S",
+          "right": "N",
+          "chosen": "S",
+          "score": 0.8125,
+          "leftScore": 13.0,
+          "rightScore": 3.0
+        },
+        "T_F": {
+          "label": "T/F",
+          "left": "T",
+          "right": "F",
+          "chosen": "F",
+          "score": 0.75,
+          "leftScore": 4.0,
+          "rightScore": 12.0
+        },
+        "J_P": {
+          "label": "J/P",
+          "left": "J",
+          "right": "P",
+          "chosen": "J",
+          "score": 0.5625,
+          "leftScore": 9.0,
+          "rightScore": 7.0
+        }
+      },
+      "tracePath": "runs/personality-eval/20260415_132123_randfull-e-rescue-stepfun-ling/inclusionAI-Ling-flash-2.0-5278de69-d693-44ff-be75-3d768ac21b11.json"
+    }
+  ],
+  "diagnostics": {
+    "errors": [
+      {
+        "model": "gemini-2.5-flash",
+        "displayName": "gemini-2.5-flash",
+        "providerGroup": "google",
+        "status": "error",
+        "sourceSummary": "runs/personality-eval/20260415_131436_randfull-rescue-gemini25flash/summary.jsonl",
+        "errorType": "JSONDecodeError",
+        "error": "Expecting value: line 1 column 1 (char 0)"
+      },
+      {
+        "model": "gemini-3.1-pro-preview",
+        "displayName": "gemini-3.1-pro-preview",
+        "providerGroup": "google",
+        "status": "error",
+        "sourceSummary": "runs/personality-eval/20260415_124106_randfull-a-openai-google-deepseek/summary.jsonl",
+        "errorType": "JSONDecodeError",
+        "error": "Unterminated string starting at: line 1 column 15 (char 14)"
+      },
+      {
+        "model": "deepseek-reasoner",
+        "displayName": "DeepSeek Reasoner",
+        "providerGroup": "deepseek",
+        "status": "error",
+        "sourceSummary": "runs/personality-eval/20260415_125743_randfull-a-rescue-deepseek/summary.jsonl",
+        "errorType": "JSONDecodeError",
+        "error": "Expecting value: line 1 column 1 (char 0)"
+      },
+      {
+        "model": "MiniMax-M2.5",
+        "displayName": "MiniMax M2.5",
+        "providerGroup": "minimax",
+        "status": "error",
+        "sourceSummary": "runs/personality-eval/20260415_135838_randfull-rescue-minimax/summary.jsonl",
+        "errorType": "JSONDecodeError",
+        "error": "Expecting value: line 1 column 1 (char 0)"
+      },
+      {
+        "model": "MiniMax-M2.7",
+        "displayName": "MiniMax M2.7",
+        "providerGroup": "minimax",
+        "status": "error",
+        "sourceSummary": "runs/personality-eval/20260415_135838_randfull-rescue-minimax/summary.jsonl",
+        "errorType": "JSONDecodeError",
+        "error": "Expecting value: line 1 column 1 (char 0)"
+      },
+      {
+        "model": "MiniMax-M2.7-highspeed",
+        "displayName": "MiniMax M2.7 Highspeed",
+        "providerGroup": "minimax",
+        "status": "error",
+        "sourceSummary": "runs/personality-eval/20260415_135838_randfull-rescue-minimax/summary.jsonl",
+        "errorType": "JSONDecodeError",
+        "error": "Expecting value: line 1 column 1 (char 0)"
+      },
+      {
+        "model": "kimi-k2-thinking-turbo",
+        "displayName": "Kimi K2 Thinking Turbo",
+        "providerGroup": "moonshot",
+        "status": "error",
+        "sourceSummary": "runs/personality-eval/20260415_124106_randfull-d-moonshot-xai-zhipu/summary.jsonl",
+        "errorType": "RuntimeError",
+        "error": "chat completion failed after 3 attempts"
+      },
+      {
+        "model": "kimi-k2.5",
+        "displayName": "Kimi K2.5",
+        "providerGroup": "moonshot",
+        "status": "error",
+        "sourceSummary": "runs/personality-eval/20260415_124106_randfull-d-moonshot-xai-zhipu/summary.jsonl",
+        "errorType": "RuntimeError",
+        "error": "chat completion failed after 3 attempts"
+      },
+      {
+        "model": "glm-4.7",
+        "displayName": "GLM 4.7",
+        "providerGroup": "zhipu",
+        "status": "error",
+        "sourceSummary": "runs/personality-eval/20260415_124106_randfull-d-moonshot-xai-zhipu/summary.jsonl",
+        "errorType": "JSONDecodeError",
+        "error": "Expecting value: line 1 column 1 (char 0)"
+      },
+      {
+        "model": "glm-5.1",
+        "displayName": "GLM 5.1",
+        "providerGroup": "zhipu",
+        "status": "error",
+        "sourceSummary": "runs/personality-eval/20260415_124106_randfull-d-moonshot-xai-zhipu/summary.jsonl",
+        "errorType": "JSONDecodeError",
+        "error": "Expecting value: line 1 column 1 (char 0)"
+      },
+      {
+        "model": "stepfun-ai/Step-3.5-Flash",
+        "displayName": "Step 3.5 Flash",
+        "providerGroup": "other_cn",
+        "status": "error",
+        "sourceSummary": "runs/personality-eval/20260415_132123_randfull-e-rescue-stepfun-ling/summary.jsonl",
+        "errorType": "JSONDecodeError",
+        "error": "Expecting value: line 1 column 1 (char 0)"
+      }
+    ],
+    "dropped": [
+      {
+        "model": "gemini-2.5-pro",
+        "displayName": "gemini-2.5-pro",
+        "providerGroup": "google",
+        "status": "dropped",
+        "reason": "Stopped after link stall or no useful progress under the one-retry rule."
+      },
+      {
+        "model": "qwen3.5-plus",
+        "displayName": "Qwen3.5 Plus",
+        "providerGroup": "qwen",
+        "status": "dropped",
+        "reason": "Stopped after link stall or no useful progress under the one-retry rule."
+      },
+      {
+        "model": "doubao-seed-1-8-251228",
+        "displayName": "Doubao Seed 1.8",
+        "providerGroup": "bytedance",
+        "status": "dropped",
+        "reason": "Stopped after link stall or no useful progress under the one-retry rule."
+      },
+      {
+        "model": "doubao-seed-2-0-pro-260215",
+        "displayName": "Doubao Seed 2.0 Pro",
+        "providerGroup": "bytedance",
+        "status": "dropped",
+        "reason": "Stopped after link stall or no useful progress under the one-retry rule."
+      },
+      {
+        "model": "baidu/ERNIE-4.5-300B-A47B",
+        "displayName": "ERNIE 4.5 300B A47B",
+        "providerGroup": "other_cn",
+        "status": "dropped",
+        "reason": "Stopped after link stall or no useful progress under the one-retry rule."
+      }
+    ]
+  }
+}
