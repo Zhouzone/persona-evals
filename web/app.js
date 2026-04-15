@@ -7,6 +7,7 @@ const nodes = {
   scanSummary: document.querySelector("#scan-summary"),
   personaMap: document.querySelector("#persona-map"),
   providerGrid: document.querySelector("#provider-grid"),
+  findingSnapshot: document.querySelector("#finding-snapshot"),
   resultCount: document.querySelector("#result-count"),
   resultSearch: document.querySelector("#result-search"),
   searchHints: document.querySelector("#search-hints"),
@@ -433,32 +434,59 @@ function updateResultViews() {
   renderCardsRows(rows, allRows);
 }
 
-function buildFindingItems(data) {
+function findingStats(data) {
   const runs = publishedRuns(data);
   const mbtiCounts = countValues(runs, "mbtiType");
   const sbtiCounts = countValues(runs, "sbtiType");
   const dominantMbti = mbtiCounts[0] || ["待定", 0];
   const dominantSbti = sbtiCounts[0] || ["待定", 0];
   const providers = new Set(runs.map((run) => run.providerGroup).filter(Boolean)).size;
+  return { runs, mbtiCounts, sbtiCounts, dominantMbti, dominantSbti, providers };
+}
+
+function renderFindingSnapshot(data) {
+  const { runs, mbtiCounts, sbtiCounts, dominantMbti, dominantSbti } = findingStats(data);
+  nodes.findingSnapshot.innerHTML = `
+    <div class="snapshot-main">
+      <span>SBTI 主峰</span>
+      <strong>${escapeHtml(dominantSbti[0])}</strong>
+      <em>${escapeHtml(typeShareLabel(runs, "sbtiType", dominantSbti[0]))} 模型落在这里</em>
+    </div>
+    <div class="snapshot-mini">
+      <span>MBTI 主峰</span>
+      <strong>${escapeHtml(dominantMbti[0])}</strong>
+      <em>${escapeHtml(typeShareLabel(runs, "mbtiType", dominantMbti[0]))} 模型落在这里</em>
+    </div>
+    <div class="snapshot-mini">
+      <span>标签数量</span>
+      <strong>${mbtiCounts.length} / ${sbtiCounts.length}</strong>
+      <em>MBTI-style / SBTI-style</em>
+    </div>
+  `;
+}
+
+function buildFindingItems(data) {
+  const { runs, mbtiCounts, dominantMbti, dominantSbti, providers } = findingStats(data);
+  const secondaryMbti = mbtiCounts
+    .slice(1)
+    .map(([label]) => label)
+    .join("、");
 
   return [
     {
       value: `${mbtiCounts.length} 种`,
-      title: "MBTI-style 没有完全收敛",
-      body: `${dominantMbti[0]} 是当前主峰，占 ${pct(dominantMbti[1] / Math.max(runs.length, 1))}；同时还能看到 ${mbtiCounts
-        .slice(1)
-        .map(([label]) => label)
-        .join("、")}。`,
+      title: "MBTI-style 不是一刀切",
+      body: `${dominantMbti[0]} 是当前主峰，占 ${pct(dominantMbti[1] / Math.max(runs.length, 1))}；${secondaryMbti ? `同时还能看到 ${secondaryMbti}` : "但仍有其它低频标签"}。`,
     },
     {
       value: pct(dominantSbti[1] / Math.max(runs.length, 1)),
-      title: "SBTI-style 更集中",
-      body: `${dominantSbti[0]} 占比最高，说明很多 assistant 默认会选择更稳定、边界清晰的回答方式。`,
+      title: "SBTI-style 几乎同频",
+      body: `${dominantSbti[0]} 占比最高，说明很多 assistant 默认会选择更稳定、负责、边界清晰的回答方式。`,
     },
     {
       value: `${providers} 类`,
-      title: "下一步适合做任务对照",
-      body: `${runs.length} 个可计分模型覆盖 ${providers} 类来源，可以继续把人格标签和任务表现放在一起看。`,
+      title: "下一步要看人格是否影响做题",
+      body: `${runs.length} 个可计分模型覆盖 ${providers} 类来源，可以继续把人格标签和任务表现放在一起对照。`,
     },
   ];
 }
@@ -500,6 +528,7 @@ loadResults()
     renderScanSummary(data);
     renderPersonaMap(data);
     renderProviderCoverage(data);
+    renderFindingSnapshot(data);
     renderFindingItems(data);
     renderSearchHints(data);
     renderFilters(data);

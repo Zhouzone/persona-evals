@@ -560,11 +560,11 @@ h3 {
   display: block;
 }
 
-.finding-panel {
+.finding-board {
   display: grid;
-  grid-template-columns: minmax(260px, 0.35fr) minmax(0, 0.65fr);
-  gap: 34px;
-  align-items: start;
+  grid-template-columns: minmax(300px, 0.4fr) minmax(0, 0.6fr);
+  gap: 24px;
+  align-items: stretch;
   padding: 28px;
   border: 1px solid var(--line-strong);
   background:
@@ -574,13 +574,74 @@ h3 {
 }
 
 .rail-copy {
-  position: static;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
 }
 
 .rail-copy p:not(.section-label) {
   margin: 18px 0 0;
   color: var(--muted);
   line-height: 1.8;
+}
+
+.finding-snapshot {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 28px;
+}
+
+.snapshot-main,
+.snapshot-mini {
+  min-height: 118px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--surface-soft) 50%, transparent);
+}
+
+.snapshot-main {
+  grid-column: 1 / -1;
+  color: #ffffff;
+  border-color: color-mix(in srgb, var(--accent-strong) 78%, transparent);
+  background:
+    linear-gradient(135deg, var(--accent-strong), color-mix(in srgb, var(--blue) 82%, #000000));
+}
+
+.snapshot-main span,
+.snapshot-mini span {
+  display: block;
+  color: var(--faint);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.snapshot-main span,
+.snapshot-main em {
+  color: color-mix(in srgb, #ffffff 82%, transparent);
+}
+
+.snapshot-main strong,
+.snapshot-mini strong {
+  display: block;
+  margin: 12px 0 8px;
+  font-size: 34px;
+  font-weight: 930;
+  line-height: 1;
+}
+
+.snapshot-mini strong {
+  color: var(--ink);
+}
+
+.snapshot-main em,
+.snapshot-mini em {
+  display: block;
+  color: var(--muted);
+  font-style: normal;
+  font-size: 12px;
+  line-height: 1.55;
 }
 
 .finding-list {
@@ -599,6 +660,11 @@ h3 {
   padding: 18px;
   border: 1px solid var(--line);
   background: color-mix(in srgb, var(--surface-soft) 46%, transparent);
+}
+
+.finding-list li:first-child {
+  border-color: color-mix(in srgb, var(--accent) 38%, var(--line));
+  background: color-mix(in srgb, var(--accent) 9%, var(--surface));
 }
 
 .finding-index {
@@ -997,7 +1063,7 @@ footer p {
   .hero-grid,
   .section-head,
   .section-head.compact,
-  .finding-panel {
+  .finding-board {
     grid-template-columns: 1fr;
   }
 
@@ -1061,6 +1127,7 @@ footer p {
   .scan-summary,
   .method-timeline,
   .map-focus,
+  .finding-snapshot,
   .finding-list li,
   .provider-grid,
   .card-grid,
@@ -1094,7 +1161,7 @@ footer p {
     padding-right: 16px;
   }
 
-  .finding-panel {
+  .finding-board {
     padding: 18px;
   }
 
