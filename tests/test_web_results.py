@@ -15,6 +15,8 @@ class WebResultsDataTests(unittest.TestCase):
         self.assertNotIn("./data.js", html)
         self.assertIn("./app.js", html)
         self.assertIn("./data/results.json", app)
+        self.assertIn("https://github.com/Zhouzone/persona-evals", html)
+        self.assertIn("Persona Evals", html)
         self.assertNotIn("rerun needed", app)
         self.assertIn("no complete trace", app)
         self.assertIn('id="provider-coverage"', html)
